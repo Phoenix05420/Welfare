@@ -1,0 +1,17 @@
+fastapi
+uvicorn
+pydantic
+requests==2.32.3
+beautifulsoup4==4.12.3
+httpx
+authlib
+python-jose[cryptography]
+fastapi-sso
+sqlalchemy
+psycopg2-binary
+python-dotenv
+opencv-python-headless
+Pillow
+python-multipart
+PyMuPDF
+playwright
