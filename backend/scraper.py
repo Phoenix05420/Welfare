@@ -284,13 +284,27 @@ async def api_scrape_all():
     }
 
 
+_UNREACHABLE_DOMAINS = set()
+_UNREACHABLE_TIMESTAMP = {}
+
+
 def parse_rich_details(url: str) -> dict:
-    """Fetch and scrape rich details from a govtschemes.in detail page."""
+    """Fetch and scrape rich details from a govtschemes.in detail page with circuit breaker."""
     try:
         if not url or "govtschemes.in" not in url:
             return {}
         
-        resp = requests.get(url, headers=HEADERS, timeout=10)
+        # Check domain circuit breaker (don't spam DNS/Connection errors if domain is offline)
+        import time
+        from urllib.parse import urlparse
+        domain = urlparse(url).netloc
+        if domain in _UNREACHABLE_DOMAINS:
+            if time.time() - _UNREACHABLE_TIMESTAMP.get(domain, 0) < 60:
+                return {}
+            else:
+                _UNREACHABLE_DOMAINS.discard(domain)
+        
+        resp = requests.get(url, headers=HEADERS, timeout=6)
         resp.raise_for_status()
         soup = BeautifulSoup(resp.text, "html.parser")
         
@@ -395,6 +409,16 @@ def parse_rich_details(url: str) -> dict:
             details[key] = cleaned
             
         return details
-    except Exception as e:
-        logger.error(f"[scraper] Failed to parse rich details from {url}: {e}")
+    except (requests.exceptions.ConnectionError, requests.exceptions.Timeout, Exception) as e:
+        err_str = str(e)
+        from urllib.parse import urlparse
+        import time
+        domain = urlparse(url).netloc or "www.govtschemes.in"
+        if "getaddrinfo failed" in err_str or "NameResolutionError" in err_str or "ConnectionPool" in err_str or "timed out" in err_str:
+            if domain not in _UNREACHABLE_DOMAINS:
+                logger.warning(f"[scraper] External domain {domain} is unreachable or offline ({e.__class__.__name__}). Activating circuit breaker for 60s.")
+                _UNREACHABLE_DOMAINS.add(domain)
+                _UNREACHABLE_TIMESTAMP[domain] = time.time()
+        else:
+            logger.debug(f"[scraper] Failed to parse rich details from {url}: {e}")
         return {}

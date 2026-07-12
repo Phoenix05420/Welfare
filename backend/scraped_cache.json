@@ -10,7 +10,9 @@
       "ta": "Government Colleges திட்டம் — தமிழ்நாடு அரசின் education திட்டம்."
     },
     "type": "education",
-    "categories": ["Students"],
+    "categories": [
+      "Students"
+    ],
     "source": "tndce_colleges",
     "sourceUrl": "https://tndce.tn.gov.in/Colleges",
     "pdfUrl": null,
@@ -50,7 +52,9 @@
       "ta": "Aided Colleges திட்டம் — தமிழ்நாடு அரசின் education திட்டம்."
     },
     "type": "education",
-    "categories": ["Students"],
+    "categories": [
+      "Students"
+    ],
     "source": "tndce_colleges",
     "sourceUrl": "https://tndce.tn.gov.in/Colleges",
     "pdfUrl": null,
@@ -90,7 +94,9 @@
       "ta": "Self Financing Colleges திட்டம் — தமிழ்நாடு அரசின் education திட்டம்."
     },
     "type": "education",
-    "categories": ["Students"],
+    "categories": [
+      "Students"
+    ],
     "source": "tndce_colleges",
     "sourceUrl": "https://tndce.tn.gov.in/Colleges",
     "pdfUrl": null,
@@ -130,7 +136,9 @@
       "ta": "DCE திட்டம் — தமிழ்நாடு அரசின் scheme திட்டம்."
     },
     "type": "scheme",
-    "categories": ["General"],
+    "categories": [
+      "General"
+    ],
     "source": "tndce_colleges",
     "sourceUrl": "https://tndce.tn.gov.in/Colleges",
     "pdfUrl": "https://tndce.tn.gov.inassets/uploads/guidelines/16727450621332sample.pdf",
@@ -170,7 +178,9 @@
       "ta": "Arts and Science UGPG Courses 2019-20 - GO திட்டம் — தமிழ்நாடு அரசின் scheme திட்டம்."
     },
     "type": "scheme",
-    "categories": ["SC"],
+    "categories": [
+      "SC"
+    ],
     "source": "tndce_colleges",
     "sourceUrl": "https://tndce.tn.gov.in/Colleges",
     "pdfUrl": "https://tndce.tn.gov.inassets/uploads/guidelines/16727450195523sample.pdf",
@@ -210,7 +220,9 @@
       "ta": "Social Work Guidelines 2018-19 திட்டம் — தமிழ்நாடு அரசின் scheme திட்டம்."
     },
     "type": "scheme",
-    "categories": ["General"],
+    "categories": [
+      "General"
+    ],
     "source": "tndce_colleges",
     "sourceUrl": "https://tndce.tn.gov.in/Colleges",
     "pdfUrl": "https://tndce.tn.gov.inassets/uploads/guidelines/16727450404516sample.pdf",
@@ -250,7 +262,10 @@
       "ta": "உதவித்தொகை தமிழ்நாடு — தமிழ்நாடு அரசின் scholarship திட்டம்."
     },
     "type": "scholarship",
-    "categories": ["SC", "Students"],
+    "categories": [
+      "SC",
+      "Students"
+    ],
     "source": "tndce_scholarships",
     "sourceUrl": "https://tndce.tn.gov.in#",
     "pdfUrl": null,
@@ -298,7 +313,10 @@
       "ta": "உதவித்தொகை தமிழ்நாடு — தமிழ்நாடு அரசின் scholarship திட்டம்."
     },
     "type": "scholarship",
-    "categories": ["SC", "Students"],
+    "categories": [
+      "SC",
+      "Students"
+    ],
     "source": "tndce_scholarships",
     "sourceUrl": "https://tndce.tn.gov.in#",
     "pdfUrl": null,
@@ -346,7 +364,9 @@
       "ta": "திட்டம் — தமிழ்நாடு அரசின் scheme திட்டம்."
     },
     "type": "scheme",
-    "categories": ["SC"],
+    "categories": [
+      "SC"
+    ],
     "source": "tndce_scholarships",
     "sourceUrl": "https://tndce.tn.gov.in#",
     "pdfUrl": null,
@@ -386,7 +406,11 @@
       "ta": "உதவித்தொகை தமிழ்நாடு — தமிழ்நாடு அரசின் scholarship திட்டம்."
     },
     "type": "scholarship",
-    "categories": ["SC", "Students", "Persons with Disabilities"],
+    "categories": [
+      "SC",
+      "Students",
+      "Persons with Disabilities"
+    ],
     "source": "tndce_scholarships",
     "sourceUrl": "https://tndce.tn.gov.in#",
     "pdfUrl": null,
@@ -434,7 +458,12 @@
       "ta": "உதவித்தொகை மாணவர்கள் தமிழ்நாடு — தமிழ்நாடு அரசின் scholarship திட்டம்."
     },
     "type": "scholarship",
-    "categories": ["SC", "ST", "Students", "Persons with Disabilities"],
+    "categories": [
+      "SC",
+      "ST",
+      "Students",
+      "Persons with Disabilities"
+    ],
     "source": "tndce_scholarships",
     "sourceUrl": "https://tndce.tn.gov.in#",
     "pdfUrl": null,
@@ -482,7 +511,12 @@
       "ta": "உதவித்தொகை மாணவர்கள் தமிழ்நாடு — தமிழ்நாடு அரசின் scholarship திட்டம்."
     },
     "type": "scholarship",
-    "categories": ["SC", "ST", "Students", "Persons with Disabilities"],
+    "categories": [
+      "SC",
+      "ST",
+      "Students",
+      "Persons with Disabilities"
+    ],
     "source": "tndce_scholarships",
     "sourceUrl": "https://tndce.tn.gov.in#",
     "pdfUrl": null,
@@ -530,7 +564,13 @@
       "ta": "கல்வி இலவச திட்டம் மாணவர்கள் தமிழ்நாடு — தமிழ்நாடு அரசின் education திட்டம்."
     },
     "type": "education",
-    "categories": ["SC", "ST", "BC", "MBC", "Students"],
+    "categories": [
+      "SC",
+      "ST",
+      "BC",
+      "MBC",
+      "Students"
+    ],
     "source": "tndce_scholarships",
     "sourceUrl": "https://tndce.tn.gov.in#",
     "pdfUrl": null,
@@ -570,7 +610,14 @@
       "ta": "திட்டம் மாணவர்கள் தமிழ்நாடு — தமிழ்நாடு அரசின் financial assistance திட்டம்."
     },
     "type": "financial_assistance",
-    "categories": ["SC", "ST", "BC", "MBC", "Women", "Students"],
+    "categories": [
+      "SC",
+      "ST",
+      "BC",
+      "MBC",
+      "Women",
+      "Students"
+    ],
     "source": "tndce_scholarships",
     "sourceUrl": "https://tndce.tn.gov.in#",
     "pdfUrl": null,
@@ -610,7 +657,9 @@
       "ta": "தமிழ்நாடு விருது — தமிழ்நாடு அரசின் scholarship திட்டம்."
     },
     "type": "scholarship",
-    "categories": ["General"],
+    "categories": [
+      "General"
+    ],
     "source": "tndce_scholarships",
     "sourceUrl": "https://tndce.tn.gov.in#",
     "pdfUrl": null,
@@ -650,7 +699,9 @@
       "ta": "தமிழ்நாடு விருது — தமிழ்நாடு அரசின் scholarship திட்டம்."
     },
     "type": "scholarship",
-    "categories": ["General"],
+    "categories": [
+      "General"
+    ],
     "source": "tndce_scholarships",
     "sourceUrl": "https://tndce.tn.gov.in#",
     "pdfUrl": null,
@@ -690,7 +741,10 @@
       "ta": "உதவித்தொகை — தமிழ்நாடு அரசின் scholarship திட்டம்."
     },
     "type": "scholarship",
-    "categories": ["SC", "Students"],
+    "categories": [
+      "SC",
+      "Students"
+    ],
     "source": "tndce_scholarships",
     "sourceUrl": "https://tndce.tn.gov.in#",
     "pdfUrl": null,
@@ -738,7 +792,9 @@
       "ta": "National Talent Search Exam NTSE திட்டம் — தமிழ்நாடு அரசின் scholarship திட்டம்."
     },
     "type": "scholarship",
-    "categories": ["Students"],
+    "categories": [
+      "Students"
+    ],
     "source": "tndce_scholarships",
     "sourceUrl": "https://tndce.tn.gov.in#",
     "pdfUrl": null,
@@ -778,7 +834,11 @@
       "ta": "கல்வி இலவச திட்டம் மாணவர்கள் தமிழ்நாடு — தமிழ்நாடு அரசின் education திட்டம்."
     },
     "type": "education",
-    "categories": ["SC", "ST", "Students"],
+    "categories": [
+      "SC",
+      "ST",
+      "Students"
+    ],
     "source": "tndce_scholarships",
     "sourceUrl": "https://tndce.tn.gov.in#",
     "pdfUrl": null,
@@ -818,7 +878,13 @@
       "ta": "உதவித்தொகை — தமிழ்நாடு அரசின் scholarship திட்டம்."
     },
     "type": "scholarship",
-    "categories": ["SC", "ST", "BC", "MBC", "Students"],
+    "categories": [
+      "SC",
+      "ST",
+      "BC",
+      "MBC",
+      "Students"
+    ],
     "source": "tndce_scholarships",
     "sourceUrl": "https://tndce.tn.gov.in/assets/uploads/scholarship/17486073903971handbook-bcmbc.pdf",
     "pdfUrl": "https://tndce.tn.gov.in/assets/uploads/scholarship/17486073903971handbook-bcmbc.pdf",
@@ -866,7 +932,11 @@
       "ta": "உதவித்தொகை — தமிழ்நாடு அரசின் scholarship திட்டம்."
     },
     "type": "scholarship",
-    "categories": ["SC", "ST", "Students"],
+    "categories": [
+      "SC",
+      "ST",
+      "Students"
+    ],
     "source": "tndce_scholarships",
     "sourceUrl": "https://tndce.tn.gov.in/assets/uploads/scholarship/17488515324131ADW_GO_92.pdf",
     "pdfUrl": "https://tndce.tn.gov.in/assets/uploads/scholarship/17488515324131ADW_GO_92.pdf",
@@ -914,7 +984,10 @@
       "ta": "ஆய்வு உதவித்தொகை முதலமைச்சர் — தமிழ்நாடு அரசின் scholarship திட்டம்."
     },
     "type": "scholarship",
-    "categories": ["ST", "Students"],
+    "categories": [
+      "ST",
+      "Students"
+    ],
     "source": "tndce_scholarships",
     "sourceUrl": "https://tndce.tn.gov.in/assets/uploads/scholarship/17486062314793G_o_53_and_175_amandment.pdf",
     "pdfUrl": "https://tndce.tn.gov.in/assets/uploads/scholarship/17486062314793G_o_53_and_175_amandment.pdf",
@@ -954,7 +1027,10 @@
       "ta": "உதவித்தொகை — தமிழ்நாடு அரசின் scholarship திட்டம்."
     },
     "type": "scholarship",
-    "categories": ["SC", "Students"],
+    "categories": [
+      "SC",
+      "Students"
+    ],
     "source": "tndce_scholarships",
     "sourceUrl": "https://tndce.tn.gov.in/Home/scholarship",
     "pdfUrl": null,
@@ -1002,7 +1078,10 @@
       "ta": "திட்டம் பெண்கள் — தமிழ்நாடு அரசின் financial assistance திட்டம்."
     },
     "type": "financial_assistance",
-    "categories": ["SC", "Women"],
+    "categories": [
+      "SC",
+      "Women"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/amma-two-wheeler-scheme-working-women",
     "pdfUrl": null,
@@ -1330,7 +1409,11 @@
       "ta": "கல்வி திட்டம் — தமிழ்நாடு அரசின் education திட்டம்."
     },
     "type": "education",
-    "categories": ["SC", "Women", "Students"],
+    "categories": [
+      "SC",
+      "Women",
+      "Students"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/moovalur-ramamirtham-ammaiyar-education-assurance-scheme",
     "pdfUrl": null,
@@ -1750,7 +1833,10 @@
       "ta": "உதவி திட்டம் தமிழ்நாடு — தமிழ்நாடு அரசின் financial assistance திட்டம்."
     },
     "type": "financial_assistance",
-    "categories": ["SC", "ST"],
+    "categories": [
+      "SC",
+      "ST"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-unemployment-assistance-scheme",
     "pdfUrl": null,
@@ -2046,7 +2132,10 @@
       "ta": "திருமண உதவி திட்டம் தமிழ்நாடு — தமிழ்நாடு அரசின் financial assistance திட்டம்."
     },
     "type": "financial_assistance",
-    "categories": ["SC", "ST"],
+    "categories": [
+      "SC",
+      "ST"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-marriage-assistance-scheme",
     "pdfUrl": null,
@@ -2340,94 +2429,221 @@
     ]
   },
   {
-    "id": "chief-minister-comprehensive-health-insurance-scheme-8cda27",
+    "id": "tamil-nadu-chief-minister-comprehensive-health-insurance-sch-38b494",
     "name": {
-      "en": "Chief Minister Comprehensive Health Insurance Scheme",
-      "ta": "திட்டம் காப்பீடு சுகாதாரம் முதலமைச்சர்"
+      "en": "Tamil Nadu Chief Minister Comprehensive Health Insurance Scheme",
+      "ta": "திட்டம் காப்பீடு சுகாதாரம் தமிழ்நாடு முதலமைச்சர்"
     },
     "shortDescription": {
-      "en": "Chief Minister Comprehensive Health Insurance Scheme — a health program by the Government of Tamil Nadu.",
-      "ta": "திட்டம் காப்பீடு சுகாதாரம் முதலமைச்சர் — தமிழ்நாடு அரசின் health திட்டம்."
+      "en": "Tamil Nadu Chief Minister Comprehensive Health Insurance Scheme — a health program by the Government of Tamil Nadu.",
+      "ta": "திட்டம் காப்பீடு சுகாதாரம் தமிழ்நாடு முதலமைச்சர் — தமிழ்நாடு அரசின் health திட்டம்."
     },
     "type": "health",
-    "categories": ["SC", "ST"],
+    "categories": [
+      "SC",
+      "ST"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/chief-minister-comprehensive-health-insurance-scheme",
     "pdfUrl": null,
     "benefits": [
       {
-        "en": "Insurance cover up to 5lakh per family member",
-        "ta": "காப்பீடு"
+        "en": "Provides cashless medical treatment at empanelled Government and private hospitals across Tamil Nadu.",
+        "ta": "தமிழ்நாடு"
       },
       {
-        "en": "Cashless Hospitalisation",
-        "ta": "Cashless Hospitalisation திட்டம்"
+        "en": "Offers health insurance coverage of up to ₹5 lakh per family per year for eligible treatments and surgeries.",
+        "ta": "காப்பீடு சுகாதாரம்"
       },
       {
-        "en": "Wide array of govt. and private hospitals are empanelled under this scheme.",
+        "en": "Covers more than 1,900 medical procedures, including several high-end surgeries and specialised treatments.",
+        "ta": "Covers more than 1,900 medical procedures, including several high-end surgeries and specialised treatments. திட்டம்"
+      },
+      {
+        "en": "Includes hospitalisation expenses, diagnostic tests, medicines, surgery charges, and follow-up care for eligible treatments.",
+        "ta": "Includes hospitalisation expenses, diagnostic tests, medicines, surgery charges, and follow-up care for eligible treatments. திட்டம்"
+      },
+      {
+        "en": "Provides coverage for pre-existing diseases as per the scheme guidelines.",
         "ta": "திட்டம்"
       },
       {
-        "en": "Free hospitalization",
-        "ta": "இலவச"
+        "en": "Eligible family members, including the spouse, dependent children, and dependent parents, can receive benefits under a single family card.",
+        "ta": "Eligible family members, including the spouse, dependent children, and dependent parents, can receive benefits under a single family card. திட்டம்"
       },
       {
-        "en": "Free diagnostics tests",
-        "ta": "இலவச"
+        "en": "Enables beneficiaries to receive treatment without making any upfront payment at empanelled hospitals.",
+        "ta": "Enables beneficiaries to receive treatment without making any upfront payment at empanelled hospitals. திட்டம்"
       },
       {
-        "en": "Free follow-up treatments",
-        "ta": "இலவச"
+        "en": "Helps economically weaker families avoid financial hardship caused by expensive medical treatment.",
+        "ta": "Helps economically weaker families avoid financial hardship caused by expensive medical treatment. திட்டம்"
       }
     ],
     "eligibility": [
       {
-        "en": "Resident of Tamil Nadu",
+        "en": "The applicant must be a permanent resident of Tamil Nadu.",
         "ta": "தமிழ்நாடு"
       },
       {
-        "en": "Name should be displayed in Family Card/Ration card",
-        "ta": "Name should be displayed in Family Card/Ration card திட்டம்"
+        "en": "The annual family income should not exceed ₹1,20,000.",
+        "ta": "The annual family income should not exceed ₹1,20,000. திட்டம்"
       },
       {
-        "en": "Family income less than 1,20,000 per annum",
-        "ta": "Family income less than 1,20,000 per annum திட்டம்"
+        "en": "The applicant must possess a valid Tamil Nadu Family Ration Card.",
+        "ta": "தமிழ்நாடு"
+      },
+      {
+        "en": "The applicant and eligible family members must have Aadhaar Cards for identity verification.",
+        "ta": "The applicant and eligible family members must have Aadhaar Cards for identity verification. திட்டம்"
+      },
+      {
+        "en": "The legal spouse, children, and dependent parents are eligible for coverage under the scheme, provided their names are included in the Family Ration Card.",
+        "ta": "திட்டம்"
+      },
+      {
+        "en": "The following categories of beneficiaries are also eligible to enrol under the Chief Minister's Comprehensive Health Insurance Scheme (CMCHIS). Applicants must produce the prescribed identity card, certificate, or authorisation letter issued by the concerned Government department or authority at the time of enrolment.",
+        "ta": "திட்டம் காப்பீடு சுகாதாரம் முதலமைச்சர்"
+      },
+      {
+        "en": "Differently Abled Welfare Board members.",
+        "ta": "Differently Abled Welfare Board members. திட்டம்"
+      },
+      {
+        "en": "Recognised Press and Media Persons.",
+        "ta": "Recognised Press and Media Persons. திட்டம்"
+      },
+      {
+        "en": "Handloom and Handloom Silk Weaving Workers Welfare Board members.",
+        "ta": "Handloom and Handloom Silk Weaving Workers Welfare Board members. திட்டம்"
+      },
+      {
+        "en": "Sri Lankan Tamil Refugees (Camp and Non-Camp).",
+        "ta": "Sri Lankan Tamil Refugees (Camp and Non-Camp). திட்டம்"
+      },
+      {
+        "en": "Inmates of Government-recognised Old Age Homes.",
+        "ta": "Inmates of Government-recognised Old Age Homes. திட்டம்"
+      },
+      {
+        "en": "Orphans.",
+        "ta": "Orphans. திட்டம்"
+      },
+      {
+        "en": "Children residing in Child Care Institutions.",
+        "ta": "Children residing in Child Care Institutions. திட்டம்"
+      },
+      {
+        "en": "Transgender Persons.",
+        "ta": "Transgender Persons. திட்டம்"
+      },
+      {
+        "en": "Institute of Mental Health (IMH) inhabitants.",
+        "ta": "சுகாதாரம்"
+      },
+      {
+        "en": "COVID Orphans.",
+        "ta": "COVID Orphans. திட்டம்"
+      },
+      {
+        "en": "State Pensioners Board beneficiaries, including Old Age and Widow Pensioners.",
+        "ta": "State Pensioners Board beneficiaries, including Old Age and Widow Pensioners. திட்டம்"
       }
     ],
     "requiredDocuments": [
       {
-        "en": "Family card/Ration card",
-        "ta": "Family card/Ration card திட்டம்"
+        "en": "Valid Tamil Nadu Family Ration Card.",
+        "ta": "தமிழ்நாடு"
       },
       {
-        "en": "Income Certificate by VAO(Village administrative Officer)/Revenue authorities",
-        "ta": "Income Certificate by VAO(Village administrative Officer)/Revenue authorities திட்டம்"
+        "en": "Aadhaar Card of the applicant and eligible family members.",
+        "ta": "Aadhaar Card of the applicant and eligible family members. திட்டம்"
       },
       {
-        "en": "Adhaar card of the beneficiaries",
-        "ta": "Adhaar card of the beneficiaries திட்டம்"
+        "en": "Income Certificate.",
+        "ta": "Income Certificate. திட்டம்"
       },
       {
-        "en": "Self Declaration by the head of the family",
-        "ta": "Self Declaration by the head of the family திட்டம்"
+        "en": "Passport-size Photograph.",
+        "ta": "Passport-size Photograph. திட்டம்"
+      },
+      {
+        "en": "Mobile Number.",
+        "ta": "Mobile Number. திட்டம்"
+      },
+      {
+        "en": "Identity Card or Certificate issued by the concerned Government department (for applicants applying under a special category).",
+        "ta": "Identity Card or Certificate issued by the concerned Government department (for applicants applying under a special category). திட்டம்"
+      },
+      {
+        "en": "Any other document requested by the enrolment authority for verification.",
+        "ta": "Any other document requested by the enrolment authority for verification. திட்டம்"
       }
     ],
     "process": [
       {
-        "en": "Fill in theApplication Formfor Chief Minister Comprehensive Health Insurance Scheme",
+        "en": "Eligible beneficiaries can apply for the Chief Minister's Comprehensive Health Insurance Scheme (CMCHIS) either online through the official portal or by visiting an authorised CMCHIS enrolment centre.",
         "ta": "திட்டம் காப்பீடு சுகாதாரம் முதலமைச்சர்"
       },
       {
-        "en": "Visit Verification Center with Required Documents (Refer Documents Required)",
-        "ta": "Visit Verification Center with Required Documents (Refer Documents Required) திட்டம்"
+        "en": "Visit theofficial CMCHIS websiteand click onCMCHIS–PMJAYApply Now under the Enrolment section.",
+        "ta": "Visit theofficial CMCHIS websiteand click onCMCHIS–PMJAYApply Now under the Enrolment section. திட்டம்"
       },
       {
-        "en": "Biometrics (Eye & Fingerprint Scanning) and Photo verification at verification centre",
-        "ta": "Biometrics (Eye & Fingerprint Scanning) and Photo verification at verification centre திட்டம்"
+        "en": "Select the appropriate enrolment category from the list.",
+        "ta": "Select the appropriate enrolment category from the list. திட்டம்"
       },
       {
-        "en": "Approval from the concerned authority and instant Generation of E-card",
-        "ta": "Approval from the concerned authority and instant Generation of E-card திட்டம்"
+        "en": "Enter your Family Ration Card Number or the ID Card/Letter Number issued by the concerned Government department and verify the details.",
+        "ta": "Enter your Family Ration Card Number or the ID Card/Letter Number issued by the concerned Government department and verify the details. திட்டம்"
+      },
+      {
+        "en": "If eligible, your beneficiary details will be displayed automatically.",
+        "ta": "If eligible, your beneficiary details will be displayed automatically. திட்டம்"
+      },
+      {
+        "en": "Complete the enrolment form by entering the required personal, family, and address details.",
+        "ta": "Complete the enrolment form by entering the required personal, family, and address details. திட்டம்"
+      },
+      {
+        "en": "Upload the required documents, such as the Aadhaar Card and the prescribed supporting document.",
+        "ta": "Upload the required documents, such as the Aadhaar Card and the prescribed supporting document. திட்டம்"
+      },
+      {
+        "en": "Review the information and click on Save Enrolment to submit the application.",
+        "ta": "Review the information and click on Save Enrolment to submit the application. திட்டம்"
+      },
+      {
+        "en": "After successful verification by the concerned authority, eligible applicants will be enrolled under the scheme and can avail cashless treatment at empanelled hospitals.",
+        "ta": "திட்டம்"
+      },
+      {
+        "en": "Visit the nearest Government Hospital, District Headquarters Hospital, Medical College Hospital, or any authorised CMCHIS enrolment centre.",
+        "ta": "Visit the nearest Government Hospital, District Headquarters Hospital, Medical College Hospital, or any authorised CMCHIS enrolment centre. திட்டம்"
+      },
+      {
+        "en": "Obtain theCMCHIS application formfrom the enrolment centre, or it can be downloaded online.",
+        "ta": "Obtain theCMCHIS application formfrom the enrolment centre, or it can be downloaded online. திட்டம்"
+      },
+      {
+        "en": "Fill in the application form with the required personal and family details.",
+        "ta": "Fill in the application form with the required personal and family details. திட்டம்"
+      },
+      {
+        "en": "Attach the required documents, such as the Family Ration Card, Aadhaar Card, Income Certificate (if applicable), and the prescribed identity card or certificate for special category applicants.",
+        "ta": "Attach the required documents, such as the Family Ration Card, Aadhaar Card, Income Certificate (if applicable), and the prescribed identity card or certificate for special category applicants. திட்டம்"
+      },
+      {
+        "en": "Submit the completed application form along with the supporting documents to the enrolment centre.",
+        "ta": "Submit the completed application form along with the supporting documents to the enrolment centre. திட்டம்"
+      },
+      {
+        "en": "The concerned officials will verify the application and documents and complete the enrolment process.",
+        "ta": "The concerned officials will verify the application and documents and complete the enrolment process. திட்டம்"
+      },
+      {
+        "en": "After successful verification, the applicant will be enrolled under CMCHIS and can avail of cashless treatment at empanelled Government and private hospitals.",
+        "ta": "After successful verification, the applicant will be enrolled under CMCHIS and can avail of cashless treatment at empanelled Government and private hospitals. திட்டம்"
       }
     ]
   },
@@ -2442,7 +2658,10 @@
       "ta": "திட்டம் தமிழ்நாடு முதலமைச்சர் — தமிழ்நாடு அரசின் financial assistance திட்டம்."
     },
     "type": "financial_assistance",
-    "categories": ["SC", "ST"],
+    "categories": [
+      "SC",
+      "ST"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-chief-ministers-solar-rooftop-capital-incentive-scheme",
     "pdfUrl": null,
@@ -2594,7 +2813,10 @@
       "ta": "திட்டம் தமிழ்நாடு — தமிழ்நாடு அரசின் scheme திட்டம்."
     },
     "type": "scheme",
-    "categories": ["SC", "Women"],
+    "categories": [
+      "SC",
+      "Women"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-magalir-urimai-thogai-scheme",
     "pdfUrl": null,
@@ -2762,7 +2984,10 @@
       "ta": "திட்டம் தமிழ்நாடு முதலமைச்சர் — தமிழ்நாடு அரசின் food திட்டம்."
     },
     "type": "food",
-    "categories": ["SC", "ST"],
+    "categories": [
+      "SC",
+      "ST"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-chief-minister-breakfast-scheme",
     "pdfUrl": null,
@@ -2830,7 +3055,10 @@
       "ta": "திட்டம் பெண்கள் தமிழ்நாடு — தமிழ்நாடு அரசின் transport திட்டம்."
     },
     "type": "transport",
-    "categories": ["SC", "Women"],
+    "categories": [
+      "SC",
+      "Women"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-zero-ticket-bus-travel-scheme-women",
     "pdfUrl": null,
@@ -2922,7 +3150,10 @@
       "ta": "திட்டம் தமிழ்நாடு — தமிழ்நாடு அரசின் education திட்டம்."
     },
     "type": "education",
-    "categories": ["SC", "Women"],
+    "categories": [
+      "SC",
+      "Women"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-pudhumai-penn-scheme",
     "pdfUrl": null,
@@ -3262,7 +3493,9 @@
       "ta": "தமிழ்நாடு — தமிழ்நாடு அரசின் financial assistance திட்டம்."
     },
     "type": "financial_assistance",
-    "categories": ["General"],
+    "categories": [
+      "General"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-unemployed-youth-employment-generation-programme",
     "pdfUrl": null,
@@ -3514,7 +3747,9 @@
       "ta": "திட்டம் தமிழ்நாடு — தமிழ்நாடு அரசின் transport திட்டம்."
     },
     "type": "transport",
-    "categories": ["SC"],
+    "categories": [
+      "SC"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-new-entrepreneur-cum-enterprise-development-scheme",
     "pdfUrl": null,
@@ -3770,7 +4005,10 @@
       "ta": "திட்டம் தமிழ்நாடு — தமிழ்நாடு அரசின் scheme திட்டம்."
     },
     "type": "scheme",
-    "categories": ["SC", "Women"],
+    "categories": [
+      "SC",
+      "Women"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-kalaignar-magalir-urimai-thittam-scheme",
     "pdfUrl": null,
@@ -4038,7 +4276,10 @@
       "ta": "ஆய்வு உதவித்தொகை தமிழ்நாடு முதலமைச்சர் — தமிழ்நாடு அரசின் scholarship திட்டம்."
     },
     "type": "scholarship",
-    "categories": ["ST", "Students"],
+    "categories": [
+      "ST",
+      "Students"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-chief-minister-fellowship-programme",
     "pdfUrl": null,
@@ -4258,7 +4499,9 @@
       "ta": "திட்டம் தமிழ்நாடு — தமிழ்நாடு அரசின் scheme திட்டம்."
     },
     "type": "scheme",
-    "categories": ["SC"],
+    "categories": [
+      "SC"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-makkaludan-mudhalvar-scheme",
     "pdfUrl": null,
@@ -4374,7 +4617,9 @@
       "ta": "திட்டம் தமிழ்நாடு — தமிழ்நாடு அரசின் scheme திட்டம்."
     },
     "type": "scheme",
-    "categories": ["SC"],
+    "categories": [
+      "SC"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-pongal-gift-scheme",
     "pdfUrl": null,
@@ -4494,7 +4739,9 @@
       "ta": "திட்டம் தமிழ்நாடு — தமிழ்நாடு அரசின் sports திட்டம்."
     },
     "type": "sports",
-    "categories": ["SC"],
+    "categories": [
+      "SC"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-kalaignar-sports-kit-scheme",
     "pdfUrl": null,
@@ -4666,7 +4913,10 @@
       "ta": "திருமண உதவி திட்டம் — தமிழ்நாடு அரசின் financial assistance திட்டம்."
     },
     "type": "financial_assistance",
-    "categories": ["SC", "ST"],
+    "categories": [
+      "SC",
+      "ST"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/dr-muthulakshmi-reddy-ninaivu-inter-caste-marriage-assistance-scheme",
     "pdfUrl": null,
@@ -4834,7 +5084,11 @@
       "ta": "திருமண உதவி திட்டம் — தமிழ்நாடு அரசின் financial assistance திட்டம்."
     },
     "type": "financial_assistance",
-    "categories": ["SC", "ST", "Women"],
+    "categories": [
+      "SC",
+      "ST",
+      "Women"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/evr-maniammaiyar-ninaivu-marriage-assistance-scheme-daughters-poor-widows",
     "pdfUrl": null,
@@ -5010,7 +5264,11 @@
       "ta": "திருமண உதவி திட்டம் — தமிழ்நாடு அரசின் financial assistance திட்டம்."
     },
     "type": "financial_assistance",
-    "categories": ["SC", "ST", "Women"],
+    "categories": [
+      "SC",
+      "ST",
+      "Women"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/dr-dharmambal-ammaiyar-ninaivu-widow-remarriage-assistance-scheme",
     "pdfUrl": null,
@@ -5190,7 +5448,11 @@
       "ta": "திருமண உதவி திட்டம் — தமிழ்நாடு அரசின் financial assistance திட்டம்."
     },
     "type": "financial_assistance",
-    "categories": ["SC", "ST", "Women"],
+    "categories": [
+      "SC",
+      "ST",
+      "Women"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/annai-therasa-ninaivu-marriage-assistance-scheme-orphan-girls",
     "pdfUrl": null,
@@ -5366,7 +5628,11 @@
       "ta": "திருமண உதவி திட்டம் — தமிழ்நாடு அரசின் financial assistance திட்டம்."
     },
     "type": "financial_assistance",
-    "categories": ["SC", "ST", "Women"],
+    "categories": [
+      "SC",
+      "ST",
+      "Women"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/moovalur-ramamirtham-ammaiyar-ninaivu-marriage-assistance-scheme",
     "pdfUrl": null,
@@ -5486,7 +5752,9 @@
       "ta": "திட்டம் தமிழ்நாடு — தமிழ்நாடு அரசின் scholarship திட்டம்."
     },
     "type": "scholarship",
-    "categories": ["SC"],
+    "categories": [
+      "SC"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-tamizh-pudhalvan-scheme",
     "pdfUrl": null,
@@ -5634,7 +5902,10 @@
       "ta": "உதவித்தொகை தமிழ்நாடு — தமிழ்நாடு அரசின் scholarship திட்டம்."
     },
     "type": "scholarship",
-    "categories": ["SC", "Students"],
+    "categories": [
+      "SC",
+      "Students"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-naan-mudhalvan-upsc-mains-scholarship-programme",
     "pdfUrl": null,
@@ -5770,7 +6041,9 @@
       "ta": "திட்டம் தமிழ்நாடு — தமிழ்நாடு அரசின் housing திட்டம்."
     },
     "type": "housing",
-    "categories": ["SC"],
+    "categories": [
+      "SC"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-kalaignarin-kanavu-illam-scheme",
     "pdfUrl": null,
@@ -5910,7 +6183,9 @@
       "ta": "தமிழ்நாடு — தமிழ்நாடு அரசின் transport திட்டம்."
     },
     "type": "transport",
-    "categories": ["General"],
+    "categories": [
+      "General"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-vidiyal-payanam-thittam",
     "pdfUrl": null,
@@ -6022,7 +6297,10 @@
       "ta": "திட்டம் தமிழ்நாடு — தமிழ்நாடு அரசின் financial assistance திட்டம்."
     },
     "type": "financial_assistance",
-    "categories": ["SC", "Women"],
+    "categories": [
+      "SC",
+      "Women"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-dr-muthulakshmi-reddy-maternity-benefit-scheme",
     "pdfUrl": null,
@@ -6294,7 +6572,9 @@
       "ta": "திட்டம் தமிழ்நாடு — தமிழ்நாடு அரசின் health திட்டம்."
     },
     "type": "health",
-    "categories": ["SC"],
+    "categories": [
+      "SC"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-amma-baby-care-kit-scheme",
     "pdfUrl": null,
@@ -6394,7 +6674,10 @@
       "ta": "திட்டம் தமிழ்நாடு முதலமைச்சர் — தமிழ்நாடு அரசின் scheme திட்டம்."
     },
     "type": "scheme",
-    "categories": ["SC", "ST"],
+    "categories": [
+      "SC",
+      "ST"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-chief-minister-thayumanavar-scheme",
     "pdfUrl": null,
@@ -6482,7 +6765,9 @@
       "ta": "திட்டம் தமிழ்நாடு — தமிழ்நாடு அரசின் financial assistance திட்டம்."
     },
     "type": "financial_assistance",
-    "categories": ["SC"],
+    "categories": [
+      "SC"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-mudhalvarin-kakkum-karangal-scheme",
     "pdfUrl": null,
@@ -6734,7 +7019,10 @@
       "ta": "இலவச திட்டம் தமிழ்நாடு — தமிழ்நாடு அரசின் education திட்டம்."
     },
     "type": "education",
-    "categories": ["SC", "Students"],
+    "categories": [
+      "SC",
+      "Students"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-free-laptop-scheme",
     "pdfUrl": null,
@@ -6886,7 +7174,9 @@
       "ta": "திட்டம் தமிழ்நாடு — தமிழ்நாடு அரசின் scheme திட்டம்."
     },
     "type": "scheme",
-    "categories": ["SC"],
+    "categories": [
+      "SC"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-anbu-karangal-scheme",
     "pdfUrl": null,
@@ -7038,7 +7328,9 @@
       "ta": "திட்டம் தமிழ்நாடு — தமிழ்நாடு அரசின் scheme திட்டம்."
     },
     "type": "scheme",
-    "categories": ["SC"],
+    "categories": [
+      "SC"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-ulagam-ungal-kaiyil-scheme",
     "pdfUrl": null,
@@ -7150,7 +7442,10 @@
       "ta": "திட்டம் பெண்கள் தமிழ்நாடு — தமிழ்நாடு அரசின் scheme திட்டம்."
     },
     "type": "scheme",
-    "categories": ["SC", "Women"],
+    "categories": [
+      "SC",
+      "Women"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-women-entrepreneurs-empowerment-scheme",
     "pdfUrl": null,
@@ -7418,7 +7713,9 @@
       "ta": "தமிழ்நாடு — தமிழ்நாடு அரசின் scheme திட்டம்."
     },
     "type": "scheme",
-    "categories": ["General"],
+    "categories": [
+      "General"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-kalaignar-kaivinai-thittam",
     "pdfUrl": null,
@@ -7634,7 +7931,9 @@
       "ta": "இலவச திட்டம் தமிழ்நாடு — தமிழ்நாடு அரசின் scheme திட்டம்."
     },
     "type": "scheme",
-    "categories": ["SC"],
+    "categories": [
+      "SC"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-200-units-free-electricity-scheme",
     "pdfUrl": null,
@@ -7770,7 +8069,10 @@
       "ta": "திட்டம் தமிழ்நாடு — தமிழ்நாடு அரசின் financial assistance திட்டம்."
     },
     "type": "financial_assistance",
-    "categories": ["SC", "Women"],
+    "categories": [
+      "SC",
+      "Women"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-madhippumigu-magalir-thittam-scheme",
     "pdfUrl": null,
@@ -7918,7 +8220,9 @@
       "ta": "திட்டம் தமிழ்நாடு — தமிழ்நாடு அரசின் financial assistance திட்டம்."
     },
     "type": "financial_assistance",
-    "categories": ["SC"],
+    "categories": [
+      "SC"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-kamarajar-kalvi-urudhi-thittam-scheme",
     "pdfUrl": null,
@@ -8050,7 +8354,9 @@
       "ta": "திட்டம் தமிழ்நாடு — தமிழ்நாடு அரசின் transport திட்டம்."
     },
     "type": "transport",
-    "categories": ["SC"],
+    "categories": [
+      "SC"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-vettri-payanam-thittam-scheme",
     "pdfUrl": null,
@@ -8154,7 +8460,10 @@
       "ta": "உதவி திட்டம் தமிழ்நாடு — தமிழ்நாடு அரசின் financial assistance திட்டம்."
     },
     "type": "financial_assistance",
-    "categories": ["SC", "ST"],
+    "categories": [
+      "SC",
+      "ST"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-unemployment-assistance-scheme-youth",
     "pdfUrl": null,
@@ -8322,7 +8631,9 @@
       "ta": "திட்டம் தமிழ்நாடு — தமிழ்நாடு அரசின் scheme திட்டம்."
     },
     "type": "scheme",
-    "categories": ["SC"],
+    "categories": [
+      "SC"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-vettri-skill-training-assurance-scheme",
     "pdfUrl": null,
@@ -8490,7 +8801,11 @@
       "ta": "இலவச திட்டம் மாணவர்கள் தமிழ்நாடு — தமிழ்நாடு அரசின் transport திட்டம்."
     },
     "type": "transport",
-    "categories": ["SC", "ST", "Students"],
+    "categories": [
+      "SC",
+      "ST",
+      "Students"
+    ],
     "source": "govtschemes",
     "sourceUrl": "https://www.govtschemes.in/tamil-nadu-free-bus-pass-scheme-students",
     "pdfUrl": null,
@@ -8618,5 +8933,162 @@
         "ta": "Bus passes are generally issued between 15 June and 30 November each year, and the pass remains valid up to 30 April of the academic year. திட்டம்"
       }
     ]
+  },
+  {
+    "id": "tamil-nadu-thaimaaman-thanga-mothiram-thittam-c5210c",
+    "name": {
+      "en": "Tamil Nadu Thaimaaman Thanga Mothiram Thittam",
+      "ta": "தமிழ்நாடு"
+    },
+    "shortDescription": {
+      "en": "Tamil Nadu Thaimaaman Thanga Mothiram Thittam — a scheme program by the Government of Tamil Nadu.",
+      "ta": "தமிழ்நாடு — தமிழ்நாடு அரசின் scheme திட்டம்."
+    },
+    "type": "scheme",
+    "categories": [
+      "General"
+    ],
+    "source": "govtschemes",
+    "sourceUrl": "https://www.govtschemes.in/tamil-nadu-thaimaaman-thanga-mothiram-thittam",
+    "pdfUrl": null,
+    "benefits": [
+      {
+        "en": "Eligible newborns will receive a BIS hallmarked 1-gram gold ring.",
+        "ta": "Eligible newborns will receive a BIS hallmarked 1-gram gold ring. திட்டம்"
+      },
+      {
+        "en": "The benefit is available for births in Government health institutions.",
+        "ta": "சுகாதாரம்"
+      },
+      {
+        "en": "Each gold ring will feature the Government of Tamil Nadu logo.",
+        "ta": "தமிழ்நாடு"
+      },
+      {
+        "en": "The benefit is provided as a commemorative gift to celebrate the birth of the child and honour the mother's journey.",
+        "ta": "The benefit is provided as a commemorative gift to celebrate the birth of the child and honour the mother's journey. திட்டம்"
+      },
+      {
+        "en": "The scheme covers all eligible newborns irrespective of birth order.",
+        "ta": "திட்டம்"
+      },
+      {
+        "en": "The benefit is available without any gender-based discrimination.",
+        "ta": "The benefit is available without any gender-based discrimination. திட்டம்"
+      },
+      {
+        "en": "The gold ring is provided in addition to existing maternity and newborn welfare benefits available through Government health institutions.",
+        "ta": "சுகாதாரம்"
+      },
+      {
+        "en": "Each gold ring will be uniquely serialised and supplied in tamper-proof packaging.",
+        "ta": "Each gold ring will be uniquely serialised and supplied in tamper-proof packaging. திட்டம்"
+      },
+      {
+        "en": "Beneficiaries are not required to submit a separate application form under the Thaimaaman Thanga Mothiram Thittam. Eligible newborns are expected to receive the benefit through the Government health institution where the delivery takes place. However, for this, they need to fulfil the following conditions:",
+        "ta": "சுகாதாரம்"
+      },
+      {
+        "en": "The pregnant woman should register under the PICME system and obtain an RCH ID.",
+        "ta": "The pregnant woman should register under the PICME system and obtain an RCH ID. திட்டம்"
+      },
+      {
+        "en": "The delivery must take place in a Government health institution in Tamil Nadu.",
+        "ta": "சுகாதாரம் தமிழ்நாடு"
+      },
+      {
+        "en": "After childbirth, the mother must submit the prescribed residence proof and other required documents for verification.",
+        "ta": "After childbirth, the mother must submit the prescribed residence proof and other required documents for verification. திட்டம்"
+      },
+      {
+        "en": "The hospital authorities will verify the delivery records, PICME details, RCH ID, and eligibility conditions.",
+        "ta": "The hospital authorities will verify the delivery records, PICME details, RCH ID, and eligibility conditions. திட்டம்"
+      },
+      {
+        "en": "Upon successful verification, the eligible newborn will receive the 1-gram gold ring under the scheme.",
+        "ta": "திட்டம்"
+      }
+    ],
+    "eligibility": [
+      {
+        "en": "The beneficiary mother must be a resident of Tamil Nadu.",
+        "ta": "தமிழ்நாடு"
+      },
+      {
+        "en": "The delivery must take place in a Government health institution in Tamil Nadu.",
+        "ta": "சுகாதாரம் தமிழ்நாடு"
+      },
+      {
+        "en": "The mother should be registered under the PICME system.",
+        "ta": "The mother should be registered under the PICME system. திட்டம்"
+      },
+      {
+        "en": "The mother must possess a valid RCH (Reproductive and Child Health) ID.",
+        "ta": "சுகாதாரம்"
+      },
+      {
+        "en": "The scheme is available for mothers who give birth to a newborn child.",
+        "ta": "திட்டம்"
+      },
+      {
+        "en": "The benefit is available irrespective of the birth order of the child. Mothers with higher-order births are also eligible.",
+        "ta": "The benefit is available irrespective of the birth order of the child. Mothers with higher-order births are also eligible. திட்டம்"
+      },
+      {
+        "en": "The scheme covers all newborns without any gender-based discrimination.",
+        "ta": "திட்டம்"
+      },
+      {
+        "en": "The mother must provide any one of the prescribed residence proof documents for verification.",
+        "ta": "The mother must provide any one of the prescribed residence proof documents for verification. திட்டம்"
+      }
+    ],
+    "requiredDocuments": [
+      {
+        "en": "PICME Registration Number.",
+        "ta": "PICME Registration Number. திட்டம்"
+      },
+      {
+        "en": "RCH (Reproductive and Child Health) ID.",
+        "ta": "சுகாதாரம்"
+      },
+      {
+        "en": "Hospital discharge summary or delivery records.",
+        "ta": "Hospital discharge summary or delivery records. திட்டம்"
+      },
+      {
+        "en": "Aadhaar Card.",
+        "ta": "Aadhaar Card. திட்டம்"
+      },
+      {
+        "en": "Ration Card.",
+        "ta": "Ration Card. திட்டம்"
+      },
+      {
+        "en": "Voter ID Card.",
+        "ta": "Voter ID Card. திட்டம்"
+      },
+      {
+        "en": "Labour Welfare Board Identity Card (if available).",
+        "ta": "Labour Welfare Board Identity Card (if available). திட்டம்"
+      },
+      {
+        "en": "Department of Posts Address Proof Card (if available).",
+        "ta": "Department of Posts Address Proof Card (if available). திட்டம்"
+      },
+      {
+        "en": "Nativity Certificate.",
+        "ta": "Nativity Certificate. திட்டம்"
+      },
+      {
+        "en": "Any other document required by the concerned Government health institution.",
+        "ta": "சுகாதாரம்"
+      },
+      {
+        "en": "Note:Applicants can submit any one of the prescribed residence proof documents, such as Aadhaar Card, Ration Card, Voter ID Card, Labour Welfare Board Identity Card, Department of Posts Address Proof Card, or Nativity Certificate to establish Tamil Nadu residency.",
+        "ta": "தமிழ்நாடு"
+      }
+    ],
+    "process": []
   }
 ]

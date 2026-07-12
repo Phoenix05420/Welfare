@@ -24,7 +24,7 @@ function FeaturedSchemesPage() {
   const [scraped, setScraped] = useState<any[]>([]);
   const [page, setPage] = useState(1);
   const [demoModalOpen, setDemoModalOpen] = useState(false);
-  const demoFormUrl = "https://forms.gle/WupVWWshoFcw3ZAT6";
+  const [demoFormUrl, setDemoFormUrl] = useState("https://forms.gle/5Qzso2XwpVB4uoML7");
 
   useEffect(() => {
     fetch("http://localhost:8000/api/scraped-schemes?per_page=100")
@@ -138,8 +138,17 @@ function FeaturedSchemesPage() {
                   ? "Try our powerful new Playwright-based Auto-Apply feature! Our AI maps the Google Form requirements, asks you only for what's missing, and submits the form invisibly in the background."
                   : "எங்கள் புதிய Playwright ஆட்டோ அப்ளை அம்சத்தை முயற்சிக்கவும்! AI Google படிவத்தின் தேவைகளை வரைபடமாக்குகிறது, விடுபட்டதை மட்டும் கேட்கிறது, மற்றும் தானாகவே படிவத்தை சமர்ப்பிக்கிறது."}
               </p>
-              <div className="inline-block bg-surface px-3 py-1.5 rounded-lg border border-border text-xs text-muted-foreground mb-2">
-                <strong>Form:</strong> {demoFormUrl}
+              <div className="flex flex-col gap-2 max-w-md mt-4">
+                <label className="text-xs font-semibold text-muted-foreground">
+                  {lang === "en" ? "Paste Google Form URL to test:" : "சோதிக்க Google படிவ URLஐ ஒட்டவும்:"}
+                </label>
+                <input
+                  type="text"
+                  value={demoFormUrl}
+                  onChange={(e) => setDemoFormUrl(e.target.value)}
+                  placeholder="https://forms.gle/..."
+                  className="bg-background/50 border border-border rounded-xl px-4 py-2 text-sm outline-none focus:border-primary transition-colors text-foreground"
+                />
               </div>
             </div>
             <div>

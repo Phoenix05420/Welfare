@@ -77,6 +77,13 @@ export function AutoApplyModal({ isOpen, onClose, formUrl }: AutoApplyModalProps
     }
   };
 
+  const getFieldForMissingKey = (key: string) => {
+    if (!analysisData?.form_fields) return null;
+    return analysisData.form_fields.find((f: any) => 
+      f.name === key || analysisData.mapping[f.name] === key
+    );
+  };
+
   const handleMissingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Update local store with new details
@@ -134,25 +141,89 @@ export function AutoApplyModal({ isOpen, onClose, formUrl }: AutoApplyModalProps
         {step === "missing_info" && (
           <div>
             <h3 className="text-lg font-semibold mb-2 text-primary">
-              {lang === "en" ? "Missing Information" : "விடுபட்ட தகவல்கள்"}
+              {lang === "en" ? "Confirm or Provide Information" : "தகவல்களை உறுதிப்படுத்தவும்"}
             </h3>
             <p className="text-sm text-muted-foreground mb-6">
-              {lang === "en" ? "We need a few more details to automatically fill this form. We'll save these for next time!" : "இந்த படிவத்தை தானாக நிரப்ப சில தகவல்கள் தேவை."}
+              {lang === "en" ? "Review, select, or enter details below to automatically fill the form." : "படிவத்தை நிரப்ப கீழே உள்ள விவரங்களை சரிபார்க்கவும்."}
             </p>
             <form onSubmit={handleMissingSubmit} className="space-y-4">
-              {missingKeys.map(key => (
-                <div key={key}>
-                  <label className="block text-xs font-semibold mb-1 capitalize text-muted-foreground">
-                    {key.replace(/([A-Z])/g, ' $1').trim()}
-                  </label>
-                  <input 
-                    required
-                    type="text"
-                    onChange={e => setFormData({...formData, [key]: e.target.value})}
-                    className="w-full rounded-xl border border-input bg-surface px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
-                  />
-                </div>
-              ))}
+              {missingKeys.map(key => {
+                const field = getFieldForMissingKey(key);
+                const hasOptions = field && field.options && field.options.length > 0;
+                
+                return (
+                  <div key={key} className="space-y-1.5">
+                    <label className="block text-xs font-semibold capitalize text-muted-foreground">
+                      {field ? field.name : key.replace(/([A-Z])/g, ' $1').trim()}
+                    </label>
+                    
+                    {hasOptions ? (
+                      field.type === 4 ? (
+                        <div className="space-y-2 py-1">
+                          {field.options.map((opt: string) => (
+                            <label key={opt} className="flex items-center gap-2.5 text-sm cursor-pointer select-none">
+                              <input
+                                type="checkbox"
+                                value={opt}
+                                onChange={e => {
+                                  const currentVal = formData[key] || "";
+                                  const currentList = currentVal ? currentVal.split(", ") : [];
+                                  let newList;
+                                  if (e.target.checked) {
+                                    newList = [...currentList, opt];
+                                  } else {
+                                    newList = currentList.filter(item => item !== opt);
+                                  }
+                                  setFormData({...formData, [key]: newList.join(", ")});
+                                }}
+                                className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary bg-surface"
+                              />
+                              <span className="text-foreground">{opt}</span>
+                            </label>
+                          ))}
+                        </div>
+                      ) : field.options.length <= 3 ? (
+                        <div className="flex flex-wrap gap-3 py-1">
+                          {field.options.map((opt: string) => (
+                            <label key={opt} className="flex items-center gap-2 text-sm cursor-pointer select-none">
+                              <input
+                                required
+                                type="radio"
+                                name={`radio-${key}`}
+                                value={opt}
+                                checked={formData[key] === opt}
+                                onChange={() => setFormData({...formData, [key]: opt})}
+                                className="h-4 w-4 border-gray-300 text-primary focus:ring-primary bg-surface"
+                              />
+                              <span className="text-foreground">{opt}</span>
+                            </label>
+                          ))}
+                        </div>
+                      ) : (
+                        <select
+                          required
+                          value={formData[key] || ""}
+                          onChange={e => setFormData({...formData, [key]: e.target.value})}
+                          className="w-full rounded-xl border border-input bg-surface px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-ring"
+                        >
+                          <option value="">{lang === "en" ? "Select option..." : "விருப்பத்தைத் தேர்ந்தெடுக்கவும்..."}</option>
+                          {field.options.map((opt: string) => (
+                            <option key={opt} value={opt}>{opt}</option>
+                          ))}
+                        </select>
+                      )
+                    ) : (
+                      <input 
+                        required
+                        type={field?.type === 9 ? "date" : "text"}
+                        placeholder={field?.type === 9 ? "" : (lang === "en" ? "Enter value..." : "மதிப்பை உள்ளிடவும்...")}
+                        onChange={e => setFormData({...formData, [key]: e.target.value})}
+                        className="w-full rounded-xl border border-input bg-surface px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
+                      />
+                    )}
+                  </div>
+                );
+              })}
               <button type="submit" className="w-full rounded-xl gradient-hero py-3 font-semibold text-primary-foreground shadow-glow mt-4">
                 {lang === "en" ? "Save & Auto-Apply" : "சேமி மற்றும் தானாக விண்ணப்பி"}
               </button>

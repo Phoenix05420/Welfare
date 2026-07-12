@@ -72,7 +72,8 @@ def is_db_available() -> bool:
             _db_init_failed = False
             return True
         except Exception as e:
-            logger.error(f"[database] Failed to initialize DB engine: {e}")
+            # Log as clean info/warning rather than error trace so console stays clean when offline
+            logger.info(f"[database] Cloud DB unreachable (offline/timeout). Seamlessly using local fallback cache.")
             engine = None
             SessionLocal = None
             _db_init_failed = True

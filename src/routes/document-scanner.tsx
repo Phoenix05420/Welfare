@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useCallback } from "react";
 import { AppShell } from "@/components/AppShell";
 import { app, useApp } from "@/lib/store";
+import { useUserProfile } from "@/lib/userProfileStore";
 
 export const Route = createFileRoute("/document-scanner")({
   head: () => ({ meta: [{ title: "Document Scanner — WelfareIntel" }] }),
@@ -26,8 +27,45 @@ type ScanResult = {
   document_type_label: string;
   fields: ScannedField[];
   photo: string | null;
+  preview_url?: string | null;
   error?: string;
 };
+
+function DocumentPreviewBox({
+  src,
+  fileName,
+  className,
+}: {
+  src?: string | null;
+  fileName?: string;
+  className?: string;
+}) {
+  if (!src && !fileName) return null;
+
+  const isPdfDataUrl = src?.startsWith("data:application/pdf");
+  const isPdfFile = fileName?.toLowerCase().endsWith(".pdf");
+
+  if (isPdfDataUrl || (isPdfFile && (!src || !src.startsWith("data:image")))) {
+    return (
+      <div className={`flex flex-col items-center justify-center gap-3 bg-primary/5 p-6 rounded-2xl border border-primary/20 ${className || ""}`}>
+        <div className="grid h-16 w-16 place-items-center rounded-2xl bg-red-500/10 text-red-500 border border-red-500/20 shadow-sm">
+          <span className="text-xl font-bold">PDF</span>
+        </div>
+        <div className="text-xs font-semibold text-foreground text-center break-all max-w-[200px]">
+          📄 {fileName || "Document.pdf"}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={src || ""}
+      alt={fileName || "Scanned document"}
+      className={className || "w-full object-contain"}
+    />
+  );
+}
 
 type ScanStep = "upload" | "scanning" | "results";
 
@@ -145,6 +183,7 @@ function DocumentScannerPage() {
         result: data,
         editedFields: data.fields.map((f) => ({ ...f })),
         step: "results",
+        preview: data.preview_url || preview,
       });
     } catch (err) {
       console.error(err);
@@ -174,6 +213,23 @@ function DocumentScannerPage() {
     if (photoAccepted && result.photo) {
       app.acceptDocumentPhoto(result.photo);
     }
+
+    const profileUpdates: Record<string, string> = {};
+    editedFields.forEach((f) => {
+      if (f.key === "name") profileUpdates["fullName"] = f.value;
+      else if (f.key === "dob") profileUpdates["dateOfBirth"] = f.value;
+      else if (f.key === "gender") profileUpdates["gender"] = f.value;
+      else if (f.key === "aadhaar_number") profileUpdates["aadhaarNumber"] = f.value;
+      else if (f.key === "pan_number") profileUpdates["panNumber"] = f.value;
+      else if (f.key === "mobile_number") profileUpdates["mobileNumber"] = f.value;
+      else if (f.key === "annual_income") profileUpdates["annualIncome"] = f.value;
+      else if (f.key === "certificate_number") profileUpdates["certificateNumber"] = f.value;
+      else if (f.key === "smart_card_number") profileUpdates["smartCardNumber"] = f.value;
+      else if (f.key === "epic_number") profileUpdates["voterIdNumber"] = f.value;
+      else if (f.key === "dl_number") profileUpdates["drivingLicenseNumber"] = f.value;
+      else profileUpdates[f.key] = f.value;
+    });
+    useUserProfile.getState().updateProfile(profileUpdates);
 
     scannerStore.update({ saved: true });
   };
@@ -378,9 +434,9 @@ function UploadStep({
           {preview ? (
             <div className="flex flex-col items-center gap-3">
               <div className="relative overflow-hidden rounded-2xl shadow-card">
-                <img
+                <DocumentPreviewBox
                   src={preview}
-                  alt="Document preview"
+                  fileName={file?.name}
                   className="max-h-72 w-auto object-contain"
                 />
                 <div className="absolute inset-0 rounded-2xl ring-2 ring-success/30" />
@@ -529,9 +585,8 @@ function ScanningStep({
       {/* Scanning preview */}
       <div className="relative overflow-hidden rounded-3xl shadow-card">
         {preview && (
-          <img
+          <DocumentPreviewBox
             src={preview}
-            alt="Scanning"
             className="max-h-96 w-auto object-contain opacity-80"
           />
         )}
@@ -665,9 +720,8 @@ function ResultsStep({
                 </span>
               </div>
               <div className="overflow-hidden rounded-2xl border border-border">
-                <img
+                <DocumentPreviewBox
                   src={preview}
-                  alt="Scanned document"
                   className="w-full object-contain"
                 />
               </div>

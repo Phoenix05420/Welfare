@@ -25,7 +25,7 @@ load_dotenv()
 # Import sub-routers
 from scraper import router as scraper_router, scrape_tndce_colleges, scrape_tndce_scholarships, scrape_govtschemes
 from ai_aligner import router as aligner_router, align_with_ai, generate_fallback_alignment
-from document_scanner import router as scanner_router
+from document_scanner import router as scanner_router, clear_scan_cache
 from database import init_db, load_scraped_schemes, save_scraped_schemes
 from chat import router as chat_router
 from auto_apply import router as auto_apply_router
@@ -346,37 +346,39 @@ async def crawl_and_populate_rich_details(raw_items: list[dict]) -> list[dict]:
     from ai_aligner import translate_details_with_ai, _generate_tamil
     
     logger.info(f"[crawler] Crawling detail pages for {len(raw_items)} items...")
+    sem = asyncio.Semaphore(4)
     
     async def _crawl_item(item: dict) -> dict:
-        source_url = item.get("detail_url") or item.get("url") or item.get("source_url")
-        # Only crawl govtschemes detail pages
-        if source_url and "govtschemes.in" in source_url:
-            try:
-                # Scrape raw details in a separate thread
-                raw_details = await asyncio.to_thread(parse_rich_details, source_url)
-                if raw_details and any(raw_details.values()):
-                    # Translate details using AI
-                    translated = await translate_details_with_ai(raw_details)
-                    item["benefits"] = translated.get("benefits", [])
-                    item["eligibility"] = translated.get("eligibility", [])
-                    item["requiredDocuments"] = translated.get("requiredDocuments", [])
-                    item["process"] = translated.get("process", [])
-                    return item
-            except Exception as e:
-                logger.error(f"[crawler] Failed to crawl details for {item.get('name')}: {e}")
-                
-        # Default fallback details if not scraped or not govtschemes
-        is_scholarship = item.get("scheme_type", "").lower() == "scholarship" or "scholarship" in item.get("name", "").lower()
-        req_docs = ["aadhaar", "community", "income"] if is_scholarship else ["aadhaar"]
-        req_docs_formatted = [{"en": doc.capitalize(), "ta": _generate_tamil(doc) or doc.capitalize()} for doc in req_docs]
-        
-        item["benefits"] = item.get("benefits") or [{"en": "Official program assistance and benefits.", "ta": "அதிகாரப்பூர்வ திட்ட உதவி மற்றும் நன்மைகள்."}]
-        item["eligibility"] = item.get("eligibility") or [{"en": "Belongs to target categories and eligible groups.", "ta": "இலக்கு பிரிவுகள் மற்றும் தகுதியான குழுக்களைச் சேர்ந்தவர்."}]
-        item["requiredDocuments"] = item.get("requiredDocuments") or req_docs_formatted
-        item["process"] = item.get("process") or [{"en": f"Visit the official website: {source_url}", "ta": f"அதிகாரப்பூர்வ இணையதளத்தைப் பார்வையிடவும்: {source_url}"}]
-        return item
+        async with sem:
+            source_url = item.get("detail_url") or item.get("url") or item.get("source_url")
+            # Only crawl govtschemes detail pages
+            if source_url and "govtschemes.in" in source_url:
+                try:
+                    # Scrape raw details in a separate thread
+                    raw_details = await asyncio.to_thread(parse_rich_details, source_url)
+                    if raw_details and any(raw_details.values()):
+                        # Translate details using AI
+                        translated = await translate_details_with_ai(raw_details)
+                        item["benefits"] = translated.get("benefits", [])
+                        item["eligibility"] = translated.get("eligibility", [])
+                        item["requiredDocuments"] = translated.get("requiredDocuments", [])
+                        item["process"] = translated.get("process", [])
+                        return item
+                except Exception as e:
+                    logger.error(f"[crawler] Failed to crawl details for {item.get('name')}: {e}")
+                    
+            # Default fallback details if not scraped or not govtschemes
+            is_scholarship = item.get("scheme_type", "").lower() == "scholarship" or "scholarship" in item.get("name", "").lower()
+            req_docs = ["aadhaar", "community", "income"] if is_scholarship else ["aadhaar"]
+            req_docs_formatted = [{"en": doc.capitalize(), "ta": _generate_tamil(doc) or doc.capitalize()} for doc in req_docs]
+            
+            item["benefits"] = item.get("benefits") or [{"en": "Official program assistance and benefits.", "ta": "அதிகாரப்பூர்வ திட்ட உதவி மற்றும் நன்மைகள்."}]
+            item["eligibility"] = item.get("eligibility") or [{"en": "Belongs to target categories and eligible groups.", "ta": "இலக்கு பிரிவுகள் மற்றும் தகுதியான குழுக்களைச் சேர்ந்தவர்."}]
+            item["requiredDocuments"] = item.get("requiredDocuments") or req_docs_formatted
+            item["process"] = item.get("process") or [{"en": f"Visit the official website: {source_url}", "ta": f"அதிகாரப்பூர்வ இணையதளத்தைப் பார்வையிடவும்: {source_url}"}]
+            return item
 
-    # Run crawl concurrently for all items
+    # Run crawl concurrently with bounded semaphore for all items
     crawled_items = await asyncio.gather(*[_crawl_item(item) for item in raw_items])
     return crawled_items
 
@@ -538,4 +540,23 @@ async def get_scrape_status():
     return {
         "in_progress": _scrape_in_progress,
         "total_items": len(_scraped_cache) if _scraped_cache else 0
+    }
+
+
+@app.api_route("/api/clear-cache", methods=["GET", "POST"])
+async def clear_all_caches():
+    """Clear all in-memory and disk caches across the backend."""
+    global _scraped_cache
+    _scraped_cache = None
+    scans_cleared = clear_scan_cache()
+    if os.path.exists(CACHE_FILE):
+        try:
+            os.remove(CACHE_FILE)
+        except Exception:
+            pass
+    logger.info("[cache] All memory and disk caches cleared via /api/clear-cache endpoint.")
+    return {
+        "status": "success",
+        "message": "All backend caches (scans, schemes, and files) have been cleared successfully.",
+        "scans_cleared": scans_cleared
     }

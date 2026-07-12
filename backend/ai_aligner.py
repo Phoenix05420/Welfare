@@ -1,7 +1,7 @@
 """
-AI Aligner — uses the locally running Ollama Ministral-14B model to align
-scraped raw data into structured, bilingual (English/Tamil) scheme records.
-Falls back to rule-based alignment when Ollama is unavailable.
+AI Aligner — uses the locally running LM Studio Llama-3.2-11B-Vision-Instruct
+model to align scraped raw data into structured, bilingual (English/Tamil)
+scheme records.  Falls back to rule-based alignment when LM Studio is unavailable.
 """
 
 import httpx
@@ -15,8 +15,7 @@ from logger import logger
 
 router = APIRouter()
 
-OLLAMA_BASE_URL = "http://localhost:11434"
-OLLAMA_MODEL = "ministral14b"
+from local_llm import chat_completion
 
 # ---------------------------------------------------------------------------
 # Category keywords for rule-based fallback classification
@@ -165,7 +164,7 @@ def _map_source(source: str, item: dict) -> str:
 async def align_with_ai(raw_items: list[dict]) -> list[dict]:
     """Send raw scraped data to Ministral-14B for structured alignment."""
     import asyncio
-    BATCH_SIZE = 15
+    BATCH_SIZE = 6
     batches = [raw_items[i:i + BATCH_SIZE] for i in range(0, len(raw_items), BATCH_SIZE)]
 
     async def _align_batch(batch: list[dict]) -> list[dict]:
@@ -186,52 +185,41 @@ For EACH scheme, return a JSON object with:
 Return ONLY a valid JSON array. No markdown, no explanation."""
 
         try:
-            async with httpx.AsyncClient(timeout=60.0) as client:
-                resp = await client.post(
-                    f"{OLLAMA_BASE_URL}/api/generate",
-                    json={
-                        "model": OLLAMA_MODEL,
-                        "prompt": prompt,
-                        "stream": False,
-                        "options": {"temperature": 0.3, "num_predict": 2048},
-                    },
-                )
-                resp.raise_for_status()
-                result = resp.json()
-                response_text = result.get("response", "")
+            messages = [{"role": "user", "content": prompt}]
+            response_text, _ = await chat_completion(messages, temperature=0.3, max_tokens=600)
 
-                # Parse JSON from response
-                parsed = _extract_json_array(response_text)
-                if parsed and len(parsed) == len(batch):
-                    aligned_batch = []
-                    for j, item in enumerate(batch):
-                        ai_data = parsed[j]
-                        source = item.get("source", "govtschemes")
-                        source_url = item.get("detail_url") or item.get("url") or item.get("source_url", "")
+            # Parse JSON from response
+            parsed = _extract_json_array(response_text)
+            if parsed and len(parsed) == len(batch):
+                aligned_batch = []
+                for j, item in enumerate(batch):
+                    ai_data = parsed[j]
+                    source = item.get("source", "govtschemes")
+                    source_url = item.get("detail_url") or item.get("url") or item.get("source_url", "")
 
-                        aligned_batch.append({
-                            "id": _generate_id(ai_data.get("name_en", item.get("name", ""))),
-                            "name": {
-                                "en": ai_data.get("name_en", item.get("name", "")),
-                                "ta": ai_data.get("name_ta", _generate_tamil(item.get("name", ""))),
-                            },
-                            "shortDescription": {
-                                "en": ai_data.get("description_en", f"{item.get('name', '')} program."),
-                                "ta": ai_data.get("description_ta", f"{_generate_tamil(item.get('name', ''))} திட்டம்."),
-                            },
-                            "type": ai_data.get("type", _classify_type(item.get("name", ""))),
-                            "categories": ai_data.get("categories", _classify_categories(item.get("name", ""))),
-                            "source": _map_source(source, item),
-                            "sourceUrl": source_url,
-                            "pdfUrl": item.get("pdf_url"),
-                            "benefits": item.get("benefits", []),
-                            "eligibility": item.get("eligibility", []),
-                            "requiredDocuments": item.get("requiredDocuments", []),
-                            "process": item.get("process", [])
-                        })
-                    return aligned_batch
+                    aligned_batch.append({
+                        "id": _generate_id(ai_data.get("name_en", item.get("name", ""))),
+                        "name": {
+                            "en": ai_data.get("name_en", item.get("name", "")),
+                            "ta": ai_data.get("name_ta", _generate_tamil(item.get("name", ""))),
+                        },
+                        "shortDescription": {
+                            "en": ai_data.get("description_en", f"{item.get('name', '')} program."),
+                            "ta": ai_data.get("description_ta", f"{_generate_tamil(item.get('name', ''))} திட்டம்."),
+                        },
+                        "type": ai_data.get("type", _classify_type(item.get("name", ""))),
+                        "categories": ai_data.get("categories", _classify_categories(item.get("name", ""))),
+                        "source": _map_source(source, item),
+                        "sourceUrl": source_url,
+                        "pdfUrl": item.get("pdf_url"),
+                        "benefits": item.get("benefits", []),
+                        "eligibility": item.get("eligibility", []),
+                        "requiredDocuments": item.get("requiredDocuments", []),
+                        "process": item.get("process", [])
+                    })
+                return aligned_batch
         except Exception as e:
-            logger.error(f"[ai_aligner] Ollama batch failed: {e}")
+            logger.error(f"[ai_aligner] LM Studio batch failed: {e}")
 
         # Fallback for this batch
         return generate_fallback_alignment(batch)
@@ -247,10 +235,19 @@ Return ONLY a valid JSON array. No markdown, no explanation."""
     return all_aligned
 
 
+def _repair_json(text: str) -> str:
+    """Repair common syntax glitches produced by smaller local models (trailing commas, missing commas between objects)."""
+    text = re.sub(r'```(?:json)?', '', text).strip()
+    # Remove trailing commas right before ] or }
+    text = re.sub(r',\s*([\]}])', r'\1', text)
+    # Add missing commas between adjacent json objects } { -> }, {
+    text = re.sub(r'\}\s*\{', '}, {', text)
+    return text
+
+
 def _extract_json_array(text: str) -> list[dict] | None:
     """Extract a JSON array from potentially messy AI output."""
-    # Try direct parse first
-    text = text.strip()
+    text = _repair_json(text)
     try:
         parsed = json.loads(text)
         if isinstance(parsed, list):
@@ -261,8 +258,9 @@ def _extract_json_array(text: str) -> list[dict] | None:
     # Try to find JSON array within text
     match = re.search(r'\[.*\]', text, re.DOTALL)
     if match:
+        raw_str = _repair_json(match.group())
         try:
-            return json.loads(match.group())
+            return json.loads(raw_str)
         except json.JSONDecodeError:
             pass
 
@@ -271,12 +269,19 @@ def _extract_json_array(text: str) -> list[dict] | None:
 
 async def translate_details_with_ai(details: dict) -> dict:
     """Translate scraped detail lists (benefits, eligibility, docs, process) to Tamil using Ollama."""
-    # Construct a compact prompt for translation
+    # Construct a compact prompt for translation, capping items so prompt stays small
+    trimmed_details = {}
+    for k, v in details.items():
+        if isinstance(v, list):
+            trimmed_details[k] = [str(x)[:200] for x in v[:4]]
+        else:
+            trimmed_details[k] = str(v)[:200]
+
     prompt = f"""You are a translator. Translate the following lists of Tamil Nadu government scheme details into Tamil (using Tamil script).
 Keep the translations accurate and professional.
 
 INPUT:
-{json.dumps(details, indent=2)}
+{json.dumps(trimmed_details, indent=2)}
 
 For each string in each list, provide the Tamil translation. Return the exact same JSON structure, but where each item is an object: {{"en": "English text", "ta": "Tamil translation"}}.
 Example format:
@@ -290,38 +295,35 @@ Example format:
 Return ONLY valid JSON. No explanations, no markdown."""
 
     try:
-        async with httpx.AsyncClient(timeout=30.0) as client:
-            resp = await client.post(
-                f"{OLLAMA_BASE_URL}/api/generate",
-                json={
-                    "model": OLLAMA_MODEL,
-                    "prompt": prompt,
-                    "stream": False,
-                    "options": {"temperature": 0.2, "num_predict": 2048},
-                },
-            )
-            resp.raise_for_status()
-            result = resp.json()
-            response_text = result.get("response", "").strip()
+        messages = [{"role": "user", "content": prompt}]
+        response_text, _ = await chat_completion(messages, temperature=0.2, max_tokens=512)
+        response_text = _repair_json(response_text)
             
-            # Extract JSON
-            match = re.search(r'\{.*\}', response_text, re.DOTALL)
-            if match:
-                translated = json.loads(match.group())
-                return translated
+        # Extract JSON object cleanly with syntax repair
+        match = re.search(r'\{.*\}', response_text, re.DOTALL)
+        if match:
+            raw_str = _repair_json(match.group())
+            try:
+                translated = json.loads(raw_str)
+                if isinstance(translated, dict) and any(translated.values()):
+                    return translated
+            except json.JSONDecodeError as jde:
+                logger.debug(f"[ai_aligner] Details JSON decode syntax issue ({jde}), using rule-based fallback.")
     except Exception as e:
-        logger.error(f"[ai_aligner] Details translation failed: {e}")
+        logger.debug(f"[ai_aligner] Details translation fallback triggered: {e}")
         
-    # Rule-based fallback if Ollama fails
+    # Rule-based fallback if Ollama/LM Studio output has syntax errors or network issues
     fallback = {}
     for key, items in details.items():
         fallback[key] = []
-        for item in items:
-            # Simple fallback
-            fallback[key].append({
-                "en": item,
-                "ta": _generate_tamil(item) or f"{item} (மொழிபெயர்ப்பு இல்லை)"
-            })
+        if isinstance(items, list):
+            for item in items:
+                fallback[key].append({
+                    "en": str(item),
+                    "ta": _generate_tamil(str(item)) or f"{item} (மொழிபெயர்ப்பு இல்லை)"
+                })
+        else:
+            fallback[key] = [{"en": str(items), "ta": _generate_tamil(str(items)) or f"{items} (மொழிபெயர்ப்பு இல்லை)"}]
     return fallback
 
 
