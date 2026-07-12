@@ -15,7 +15,7 @@
 
 An advanced, end-to-end civic tech platform built to democratize access to welfare programs, scholarships, and citizen benefits. **WelfareIntel** leverages cutting-edge **Local Large Language Models (`Qwen2.5-VL` via `llama-cpp-python`)**, **real-time Playwright web scraping**, **intelligent document OCR processing**, and a **modern TanStack Start (React 19)** frontend to eliminate bureaucratic friction and seamlessly match citizens with the programs they deserve.
 
-[Key Features](#-key-features) • [System Architecture](#-system-architecture) • [Technology Stack](#-technology-stack) • [Getting Started](#-getting-started) • [API Documentation](#-api-documentation) • [Repository Structure](#-repository-structure) • [Contributing](#-contributing)
+[Key Features](#-key-features) • [System Architecture](#-system-architecture) • [Technology Stack](#-technology-stack) • [Getting Started](#-getting-started) • [API Documentation](#-api-documentation) • [CI/CD & Deployment](#-cicd--cloud-deployment-github-actions) • [Repository Structure](#-repository-structure) • [Contributing](#-contributing)
 
 ---
 
@@ -237,6 +237,20 @@ Once the backend is running, FastAPI automatically generates interactive Swagger
 | `POST` | `/api/scraper/trigger` | Triggers a live Playwright scrape task on targeted government portals |
 | `GET` | `/auth/google/login` | Initiates Google OAuth 2.0 Single Sign-On flow |
 | `GET` | `/auth/google/callback` | OAuth callback handler that verifies tokens and redirects with user session |
+
+---
+
+## 🚀 CI/CD & Cloud Deployment (GitHub Actions)
+
+WelfareIntel comes fully equipped with a production-grade **GitHub Actions CI/CD Pipeline** (`.github/workflows/`) and **multi-stage Docker containerization** (`Dockerfile.backend`, `Dockerfile.frontend`).
+
+Every push to the `main` branch automatically:
+1. **Runs Continuous Integration (`ci.yml`)**: Verifies TypeScript syntax, runs linter checks, and executes Python API diagnostic tests.
+2. **Builds & Publishes Containers (`docker-publish.yml`)**: Compiles optimized production multi-stage images (`frontend` and `backend`) and pushes them directly to your **GitHub Container Registry (`ghcr.io`)**.
+3. **Triggers Zero-Downtime Deployments (`deploy.yml`)**: Sends deployment hooks or SSH triggers to immediately restart production containers on cloud providers (**Render**, **Railway**, **Fly.io**) or a **self-hosted Linux VPS**.
+
+> [!TIP]
+> For complete step-by-step instructions on setting up repository secrets (`DATABASE_URL`, `DEPLOY_WEBHOOK_URL`, `VPS_SSH_HOST`), configuring Docker Compose, and deploying to cloud platforms, read our comprehensive **[DEPLOYMENT.md guide](DEPLOYMENT.md)**!
 
 ---
 

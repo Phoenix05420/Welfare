@@ -1,0 +1,60 @@
+name: 🚀 Continuous Deployment (Cloud / VPS Hooks)
+
+on:
+  workflow_run:
+    workflows: ["🐳 Build & Publish Docker Containers (`GHCR`)"]
+    types:
+      - completed
+  workflow_dispatch:
+
+jobs:
+  deploy-cloud-hooks:
+    name: 🌐 Trigger Cloud Deployment (Render / Railway / Webhook)
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    steps:
+      - name: 🔔 Trigger Render / Cloud Webhook (If Configured)
+        run: |
+          if [ -n "${{ secrets.DEPLOY_WEBHOOK_URL }}" ]; then
+            echo "🚀 Triggering production deployment webhook..."
+            curl -X POST "${{ secrets.DEPLOY_WEBHOOK_URL }}"
+          else
+            echo "ℹ️ No DEPLOY_WEBHOOK_URL secret found. Skipping cloud webhook trigger."
+          fi
+
+  # Optional VPS Deployment via SSH & Docker Compose
+  deploy-vps-ssh:
+    name: 🖥️ Deploy to VPS via SSH & Docker Compose
+    runs-on: ubuntu-latest
+    if: ${{ (github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch') && env.HAS_SSH == 'true' }}
+    env:
+      HAS_SSH: ${{ secrets.VPS_SSH_HOST != '' }}
+    steps:
+      - name: 📥 Checkout Docker Compose
+        uses: actions/checkout@v4
+
+      - name: 📤 Copy docker-compose.prod.yml to VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_SSH_HOST }}
+          username: ${{ secrets.VPS_SSH_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_SSH_PORT || 22 }}
+          source: "docker-compose.prod.yml"
+          target: "~/welfare/"
+
+      - name: 🐳 Pull Latest GHCR Containers & Restart Stack
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_SSH_HOST }}
+          username: ${{ secrets.VPS_SSH_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_SSH_PORT || 22 }}
+          script: |
+            cd ~/welfare
+            # Login to GHCR
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            # Pull latest containers and restart in background
+            docker compose -f docker-compose.prod.yml pull
+            docker compose -f docker-compose.prod.yml up -d --remove-orphans
+            docker system prune -f

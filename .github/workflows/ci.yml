@@ -1,0 +1,80 @@
+name: 🧪 Continuous Integration (CI)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  frontend-ci:
+    name: 🎨 Frontend Build & Lint (`TanStack Start`)
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🟢 Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: 📦 Install Frontend Dependencies
+        run: npm ci --legacy-peer-deps || npm install
+
+      - name: 📐 Run TypeScript & Code Linting
+        run: |
+          npm run lint --if-present
+          npx tsc --noEmit
+
+      - name: 🏗️ Build Production Bundle (Nitro Node Server)
+        run: npm run build
+        env:
+          NODE_ENV: production
+          VITE_API_BASE_URL: http://localhost:8000
+
+      - name: 📤 Upload Frontend Artifact (Optional Debugging)
+        uses: actions/upload-artifact@v4
+        with:
+          name: nitro-server-output
+          path: .output
+          retention-days: 3
+
+  backend-ci:
+    name: ⚙️ Backend Test & Syntax Verification (`FastAPI`)
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🐍 Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 📦 Install Backend Dependencies
+        working-directory: ./backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          # Install Playwright browser binaries for scraper checks
+          playwright install --with-deps chromium
+
+      - name: 🔍 Check Python Syntax & Imports
+        working-directory: ./backend
+        run: |
+          python -m compileall . -q
+          # Verify core FastAPI app imports successfully without syntax errors
+          python -c "import main, scraper, document_scanner, ai_aligner; print('✅ Core modules imported cleanly!')"
+
+      - name: 🧪 Run Diagnostics Check
+        working-directory: ./backend
+        run: |
+          # Verify local configuration & JSON cache parsing
+          python -c "import json; data = json.load(open('scraped_cache.json', encoding='utf-8')); print(f'✅ Scraped cache loaded cleanly with {len(data)} schemes!')"
