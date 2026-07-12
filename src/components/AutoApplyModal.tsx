@@ -15,7 +15,7 @@ export function AutoApplyModal({ isOpen, onClose, formUrl }: AutoApplyModalProps
   const { profile, updateProfile } = useUserProfile();
 
   const getCombinedProfile = () => {
-    const combined: Record<string, string> = { ...profile };
+    const combined: Record<string, any> = { ...profile };
     
     // 1. App user (Google login name/email)
     if (user?.name) combined["fullName"] = user.name;
