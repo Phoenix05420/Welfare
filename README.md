@@ -239,7 +239,17 @@ Once the backend is running, FastAPI automatically generates interactive Swagger
 
 ## 🚀 CI/CD & Cloud Deployment (GitHub Actions)
 
-WelfareIntel comes fully equipped with a production-grade **GitHub Actions CI/CD Pipeline** (`.github/workflows/`) and **multi-stage Docker containerization** (`Dockerfile.backend`, `Dockerfile.frontend`).
+### ⚡ Instant One-Click Cloud Deployment
+Because WelfareIntel includes a pre-configured **Render Blueprint (`render.yaml`)**, you can launch the entire full-stack application onto the cloud right now with **a single click**:
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Phoenix05420/Welfare)
+
+Once clicked, Render automatically builds both **`welfare-backend`** (`Dockerfile.backend`) and **`welfare-frontend`** (`Dockerfile.frontend`), links them via dynamic environment variables (`VITE_API_BASE_URL`), and gives you an instant live public URL (e.g. `https://welfare-frontend.onrender.com`)!
+
+---
+
+### 🐳 Automated GitHub Actions CI/CD Pipeline
+WelfareIntel comes fully equipped with automated continuous integration (`.github/workflows/ci.yml`) and multi-stage Docker container publishing (`docker-publish.yml`).
 
 Every push to the `main` branch automatically:
 1. **Runs Continuous Integration (`ci.yml`)**: Verifies TypeScript syntax, runs linter checks, and executes Python API diagnostic tests.

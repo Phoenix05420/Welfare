@@ -4,6 +4,7 @@ import { useState, useRef, useCallback } from "react";
 import { AppShell } from "@/components/AppShell";
 import { app, useApp } from "@/lib/store";
 import { useUserProfile } from "@/lib/userProfileStore";
+import { API_BASE_URL } from "@/lib/api";
 
 export const Route = createFileRoute("/document-scanner")({
   head: () => ({ meta: [{ title: "Document Scanner — WelfareIntel" }] }),
@@ -164,7 +165,7 @@ function DocumentScannerPage() {
       const form = new FormData();
       form.append("file", file);
 
-      const res = await fetch("http://localhost:8000/api/scan-document", {
+      const res = await fetch(`${API_BASE_URL}/api/scan-document`, {
         method: "POST",
         body: form,
       });

@@ -1,0 +1,39 @@
+services:
+  # ============================================================================
+  # WelfareIntel FastAPI & Scraper Backend Service
+  # ============================================================================
+  - type: web
+    name: welfare-backend
+    runtime: docker
+    dockerfilePath: ./Dockerfile.backend
+    dockerContext: .
+    envVars:
+      - key: PORT
+        value: 8000
+      - key: FRONTEND_URL
+        value: https://welfare-frontend.onrender.com
+      - key: DATABASE_URL
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: GOOGLE_REDIRECT_URI
+        value: https://welfare-backend.onrender.com/auth/google/callback
+    healthCheckPath: /docs
+
+  # ============================================================================
+  # WelfareIntel TanStack Start / Nitro Frontend Service
+  # ============================================================================
+  - type: web
+    name: welfare-frontend
+    runtime: docker
+    dockerfilePath: ./Dockerfile.frontend
+    dockerContext: .
+    envVars:
+      - key: PORT
+        value: 8081
+      - key: NODE_ENV
+        value: production
+      - key: VITE_API_BASE_URL
+        value: https://welfare-backend.onrender.com

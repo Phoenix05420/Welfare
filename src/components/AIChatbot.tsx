@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { useApp } from "@/lib/store";
+import { API_BASE_URL } from "@/lib/api";
 
 type Msg = { role: "user" | "ai"; text: string };
 
@@ -40,7 +41,7 @@ export function AIChatbot({ contextLabel }: { contextLabel?: string }) {
     setIsLoading(true);
 
     try {
-      const res = await fetch("http://localhost:8000/api/chat", {
+      const res = await fetch(`${API_BASE_URL}/api/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

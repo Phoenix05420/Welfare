@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useUserProfile } from "@/lib/userProfileStore";
 import { useApp } from "@/lib/store";
+import { API_BASE_URL } from "@/lib/api";
 
 interface AutoApplyModalProps {
   isOpen: boolean;
@@ -56,7 +57,7 @@ export function AutoApplyModal({ isOpen, onClose, formUrl }: AutoApplyModalProps
 
   const analyzeForm = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/auto-apply/analyze", {
+      const res = await fetch(`${API_BASE_URL}/api/auto-apply/analyze`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url: formUrl, user_details: getCombinedProfile() }),
@@ -98,7 +99,7 @@ export function AutoApplyModal({ isOpen, onClose, formUrl }: AutoApplyModalProps
   const submitForm = async (analysis: any, completeProfile = getCombinedProfile()) => {
     setStep("submitting");
     try {
-      const res = await fetch("http://localhost:8000/api/auto-apply/submit", {
+      const res = await fetch(`${API_BASE_URL}/api/auto-apply/submit`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -7,6 +7,7 @@ import { Pagination } from "@/components/Pagination";
 
 import { CATEGORIES, SCHEMES } from "@/lib/data";
 import { useApp } from "@/lib/store";
+import { API_BASE_URL } from "@/lib/api";
 
 export const Route = createFileRoute("/dashboard")({
   head: () => ({ meta: [{ title: "Dashboard — WelfareIntel" }] }),
@@ -19,7 +20,7 @@ function Dashboard() {
   const [scraped, setScraped] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/scraped-schemes?per_page=100")
+    fetch(`${API_BASE_URL}/api/scraped-schemes?per_page=100`)
       .then((res) => res.json())
       .then((data) => {
         if (data && data.items) {

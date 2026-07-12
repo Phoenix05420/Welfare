@@ -8,7 +8,23 @@
 [![Render](https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://render.com/)
 [![Railway](https://img.shields.io/badge/Railway-131415?style=for-the-badge&logo=railway&logoColor=white)](https://railway.app/)
 
+<br />
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Phoenix05420/Welfare)
+
 </div>
+
+---
+
+## ⚡ One-Click Cloud Deployment (Instant Live URL!)
+
+Because WelfareIntel includes a pre-configured **Render Blueprint (`render.yaml`)**, you can launch the entire full-stack application onto the cloud with **a single click**:
+
+1. Click the button above: **[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Phoenix05420/Welfare)**
+2. Log in with your GitHub account on Render.
+3. Render will automatically detect `render.yaml` and spin up both **`welfare-backend`** (`Dockerfile.backend`) and **`welfare-frontend`** (`Dockerfile.frontend`).
+4. Once deployed (~3 minutes), your app will be live at a public HTTPS domain like:
+   👉 **`https://welfare-frontend.onrender.com`**
 
 ---
 

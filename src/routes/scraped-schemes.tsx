@@ -6,6 +6,7 @@ import { ScrapedSchemeCard } from "@/components/ScrapedSchemeCard";
 import { Pagination } from "@/components/Pagination";
 import { useApp, t } from "@/lib/store";
 import type { ScrapedScheme, ScrapedSchemeSource } from "@/lib/data";
+import { API_BASE_URL } from "@/lib/api";
 
 export const Route = createFileRoute("/scraped-schemes")({
   head: () => ({
@@ -21,7 +22,7 @@ export const Route = createFileRoute("/scraped-schemes")({
   component: ScrapedSchemesPage,
 });
 
-const API_BASE = "http://localhost:8000";
+const API_BASE = API_BASE_URL;
 
 function ScrapedSchemesPage() {
   const { lang } = useApp();

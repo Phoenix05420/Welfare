@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { z } from "zod";
 import { app, useApp } from "@/lib/store";
+import { API_BASE_URL } from "@/lib/api";
 
 const searchSchema = z.object({
   mode: z.enum(["signin", "login"]).optional(),
@@ -47,7 +48,7 @@ function AuthPage() {
   };
 
   const googleLogin = () => {
-    window.location.href = "http://localhost:8000/auth/google/login";
+    window.location.href = `${API_BASE_URL}/auth/google/login`;
   };
 
   return (

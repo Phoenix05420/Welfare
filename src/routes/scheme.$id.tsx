@@ -5,6 +5,7 @@ import { AppShell } from "@/components/AppShell";
 import { AIChatbot } from "@/components/AIChatbot";
 import { DOCUMENT_LABELS, SCHEMES, type DocKey } from "@/lib/data";
 import { app, useApp } from "@/lib/store";
+import { API_BASE_URL } from "@/lib/api";
 
 export const Route = createFileRoute("/scheme/$id")({
   head: ({ params }) => {
@@ -69,7 +70,7 @@ function SchemePage() {
 
     setLoading(true);
     setError(null);
-    fetch(`http://localhost:8000/api/schemes/${id}`)
+    fetch(`${API_BASE_URL}/api/schemes/${id}`)
       .then((res) => {
         if (!res.ok) throw new Error("Scheme not found");
         return res.json();
