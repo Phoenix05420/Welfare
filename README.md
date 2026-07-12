@@ -179,10 +179,7 @@ GOOGLE_REDIRECT_URI="http://localhost:8000/auth/google/callback"
 # Frontend & CORS
 FRONTEND_URL="http://localhost:8081"
 
-# Local AI Engine Configuration (Optional - Defaults to local Qwen GGUF if present)
-GGUF_MODEL_PATH="C:\Users\blue0\.lmstudio\models\lmstudio-community\Qwen2.5-VL-3B-Instruct-GGUF\Qwen2.5-VL-3B-Instruct-Q4_K_M.gguf"
-N_GPU_LAYERS="0"  # Set higher if you have an NVIDIA GPU with CUDA support
-N_CTX="4096"
+
 ```
 
 ---
