@@ -13,7 +13,7 @@ const getBaseUrl = () => {
     if (process.env.API_BASE_URL) return process.env.API_BASE_URL;
   }
   if ((typeof import.meta !== "undefined" && import.meta.env && import.meta.env.PROD) || (typeof process !== "undefined" && process.env && process.env.VERCEL)) {
-    return "https://welfare-production.up.railway.app";
+    return "https://welfare-backend.onrender.com";
   }
   return "http://localhost:8000";
 };
