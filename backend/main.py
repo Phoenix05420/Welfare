@@ -432,6 +432,12 @@ async def _perform_background_scrape_and_align():
 
 
 @app.on_event("startup")
+async def _delayed_background_scrape():
+    """Wait 10 seconds after server startup before launching background crawlers to ensure instant health check pass."""
+    await asyncio.sleep(10)
+    await _perform_background_scrape_and_align()
+
+
 async def startup_event():
     """Warm the cache immediately on startup from Neon database, file, or background task."""
     global _scraped_cache
@@ -453,10 +459,10 @@ async def startup_event():
             logger.info(f"[startup] Warm cache: Loaded {len(_scraped_cache)} items from fallback file {CACHE_FILE}")
         except Exception as e:
             logger.error(f"[startup] Failed to read fallback {CACHE_FILE}: {e}")
-            asyncio.create_task(_perform_background_scrape_and_align())
+            asyncio.create_task(_delayed_background_scrape())
     else:
-        # Trigger background task to populate cache
-        asyncio.create_task(_perform_background_scrape_and_align())
+        # Trigger background task to populate cache after 10s delay
+        asyncio.create_task(_delayed_background_scrape())
 
 
 async def _get_scraped_and_aligned() -> list[dict]:
