@@ -2,7 +2,7 @@
 # WelfareIntel Backend Production Dockerfile (FastAPI + Playwright + OCR Engine)
 # ==============================================================================
 
-FROM python:3.11-slim as production
+FROM python:3.11-slim AS production
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \
@@ -38,14 +38,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /app
 
-# Copy requirement list and install dependencies
-COPY requirements.txt ./requirements.txt
-RUN pip install --upgrade pip && \
+# Copy requirement list and install dependencies (supports both root and backend context)
+COPY requirements.txt* backend/requirements.txt* ./
+RUN cp requirements.txt /tmp/req.txt 2>/dev/null || true && \
+    pip install --upgrade pip && \
     pip install -r requirements.txt && \
     playwright install --with-deps chromium
 
-# Copy application source code
+# Copy application source code and adjust layout if built from root
 COPY . ./
+RUN if [ -d "/app/backend" ]; then cp -r /app/backend/* /app/ && rm -rf /app/backend /app/frontend; fi
 
 # Expose API port
 EXPOSE 8000
