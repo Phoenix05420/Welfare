@@ -10,7 +10,7 @@ ENV PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=off \
     PIP_DISABLE_PIP_VERSION_CHECK=on \
     DEBIAN_FRONTEND=noninteractive \
-    PORT=7860
+    PORT=8000
 
 # Install required system dependencies for OpenCV and Playwright browser execution
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -50,7 +50,7 @@ COPY . ./
 RUN if [ -d "/app/backend" ]; then cp -r /app/backend/* /app/ && rm -rf /app/backend /app/frontend; fi
 
 # Expose Hugging Face Space / API port
-EXPOSE 7860
+EXPOSE 8000 7860
 
 # Start Uvicorn server via python main.py where PORT (defaulting to 7860) environment variable is cleanly bound
 CMD ["python", "main.py"]
