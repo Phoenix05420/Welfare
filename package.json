@@ -1,0 +1,7 @@
+{
+  "name": "welfare-root",
+  "private": true,
+  "scripts": {
+    "build": "cd frontend && npm install && npm run build && node -e \"const fs=require('fs'); if(fs.existsSync('.vercel/output')) { fs.mkdirSync('../.vercel', {recursive:true}); fs.cpSync('.vercel/output', '../.vercel/output', {recursive:true}); console.log('Mirrored .vercel/output to root successfully!'); }\""
+  }
+}
