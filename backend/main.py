@@ -60,10 +60,13 @@ GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID", "YOUR_GOOGLE_CLIENT_ID")
 GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET", "YOUR_GOOGLE_CLIENT_SECRET")
 def get_google_redirect_uri(request: Request) -> str:
     env_uri = os.getenv("GOOGLE_REDIRECT_URI")
+    host = request.headers.get("host", "localhost:8000")
+    # If running on cloud (Render), ignore stale localhost override from .env
+    if ("onrender.com" in host or os.getenv("RENDER")) and env_uri and "localhost" in env_uri:
+        env_uri = None
     if env_uri:
         return env_uri
-    host = request.headers.get("host", "localhost:8000")
-    scheme = "https" if request.headers.get("x-forwarded-proto") == "https" else "http"
+    scheme = "https" if request.headers.get("x-forwarded-proto") == "https" or "onrender.com" in host else "http"
     return f"{scheme}://{host}/auth/google/callback"
 
 google_sso = GoogleSSO(
@@ -84,7 +87,10 @@ async def google_callback(request: Request):
     async with google_sso:
         user = await google_sso.verify_and_process(request, redirect_uri=redirect_uri)
     logger.info(f"[oauth] Google user info: email={user.email}, name={user.display_name}, picture={user.picture}")
-    frontend_url = os.getenv("FRONTEND_URL", "http://localhost:8081")
+    frontend_url = os.getenv("FRONTEND_URL", "https://welfare-2ean.vercel.app")
+    host = request.headers.get("host", "")
+    if ("onrender.com" in host or os.getenv("RENDER")) and ("localhost" in frontend_url or "welfare-frontend.onrender.com" in frontend_url):
+        frontend_url = "https://welfare-2ean.vercel.app"
     import urllib.parse
     email = urllib.parse.quote(user.email or "", safe="")
     name = urllib.parse.quote(user.display_name or "", safe="")
