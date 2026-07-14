@@ -346,7 +346,7 @@ async def crawl_and_populate_rich_details(raw_items: list[dict]) -> list[dict]:
     from ai_aligner import translate_details_with_ai, _generate_tamil
     
     logger.info(f"[crawler] Crawling detail pages for {len(raw_items)} items...")
-    sem = asyncio.Semaphore(4)
+    sem = asyncio.Semaphore(2)
     
     async def _crawl_item(item: dict) -> dict:
         async with sem:
@@ -380,6 +380,8 @@ async def crawl_and_populate_rich_details(raw_items: list[dict]) -> list[dict]:
 
     # Run crawl concurrently with bounded semaphore for all items
     crawled_items = await asyncio.gather(*[_crawl_item(item) for item in raw_items])
+    import gc
+    gc.collect()
     return crawled_items
 
 
@@ -399,6 +401,8 @@ async def _perform_background_scrape_and_align():
         colleges, scholarships, schemes = await asyncio.gather(
             colleges_task, scholarships_task, schemes_task
         )
+        import gc
+        gc.collect()
 
         raw_items = []
         raw_items.extend(colleges)
@@ -407,11 +411,13 @@ async def _perform_background_scrape_and_align():
 
         # Crawl all detail pages concurrently
         raw_items_with_details = await crawl_and_populate_rich_details(raw_items)
+        gc.collect()
 
         # Align raw data using optimized AI parallel batches
         logger.info(f"[background-scrape] Scraped {len(raw_items_with_details)} items. Aligning using AI...")
         aligned = await align_with_ai(raw_items_with_details)
         _scraped_cache = aligned
+        gc.collect()
 
         # Save to Neon database (in threadpool so Uvicorn event loop is never blocked)
         logger.info("[background-scrape] Saving aligned items to Neon database...")
@@ -429,6 +435,8 @@ async def _perform_background_scrape_and_align():
         logger.error(f"[background-scrape] Scrape and align failed: {e}")
     finally:
         _scrape_in_progress = False
+        import gc
+        gc.collect()
 
 
 async def _initialize_cache_and_background_scrape():

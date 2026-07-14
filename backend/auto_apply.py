@@ -196,7 +196,12 @@ async def submit_form(req: SubmitRequest):
                     "--disable-setuid-sandbox",
                     "--disable-dev-shm-usage",
                     "--disable-gpu",
-                    "--disable-extensions"
+                    "--disable-extensions",
+                    "--single-process",
+                    "--no-zygote",
+                    "--disable-software-rasterizer",
+                    "--js-flags=--max-old-space-size=128",
+                    "--disable-background-networking"
                 ]
             )
             # Open a clean context
