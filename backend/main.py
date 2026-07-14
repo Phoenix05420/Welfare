@@ -431,13 +431,13 @@ async def _perform_background_scrape_and_align():
         _scrape_in_progress = False
 
 
-@app.on_event("startup")
 async def _delayed_background_scrape():
     """Wait 10 seconds after server startup before launching background crawlers to ensure instant health check pass."""
     await asyncio.sleep(10)
     await _perform_background_scrape_and_align()
 
 
+@app.on_event("startup")
 async def startup_event():
     """Warm the cache immediately on startup from Neon database, file, or background task."""
     global _scraped_cache
