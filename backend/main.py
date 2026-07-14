@@ -431,25 +431,21 @@ async def _perform_background_scrape_and_align():
         _scrape_in_progress = False
 
 
-async def _delayed_background_scrape():
-    """Wait 10 seconds after server startup before launching background crawlers to ensure instant health check pass."""
-    await asyncio.sleep(10)
-    await _perform_background_scrape_and_align()
-
-
-@app.on_event("startup")
-async def startup_event():
-    """Warm the cache immediately on startup from Neon database, file, or background task."""
+async def _initialize_cache_and_background_scrape():
+    """Run database/file checks and delayed background scraping inside a non-blocking asyncio task after server boot."""
     global _scraped_cache
-    # Initialize Neon PostgreSQL database tables if connection is available
-    init_db()
+    logger.info("[startup] Server booted instantly. Initializing database and cache in background...")
     
-    # 1. Try loading from Neon DB
-    db_items = load_scraped_schemes()
-    if db_items:
-        _scraped_cache = db_items
-        logger.info(f"[startup] Warm cache: Loaded {len(_scraped_cache)} items from Neon database.")
-        return
+    # 1. Try initializing DB and loading schemes without blocking main thread
+    try:
+        await asyncio.to_thread(init_db)
+        db_items = await asyncio.to_thread(load_scraped_schemes)
+        if db_items:
+            _scraped_cache = db_items
+            logger.info(f"[startup] Warm cache: Loaded {len(_scraped_cache)} items from Neon database.")
+            return
+    except Exception as db_err:
+        logger.warning(f"[startup] Database initialization fallback: {db_err}")
 
     # 2. Try loading from local file cache
     if os.path.exists(CACHE_FILE):
@@ -459,10 +455,18 @@ async def startup_event():
             logger.info(f"[startup] Warm cache: Loaded {len(_scraped_cache)} items from fallback file {CACHE_FILE}")
         except Exception as e:
             logger.error(f"[startup] Failed to read fallback {CACHE_FILE}: {e}")
-            asyncio.create_task(_delayed_background_scrape())
+            await asyncio.sleep(10)
+            await _perform_background_scrape_and_align()
     else:
         # Trigger background task to populate cache after 10s delay
-        asyncio.create_task(_delayed_background_scrape())
+        await asyncio.sleep(10)
+        await _perform_background_scrape_and_align()
+
+
+@app.on_event("startup")
+async def startup_event():
+    """Warm the cache non-blocking on startup so Uvicorn opens socket in 0.001s."""
+    asyncio.create_task(_initialize_cache_and_background_scrape())
 
 
 async def _get_scraped_and_aligned() -> list[dict]:
@@ -471,11 +475,14 @@ async def _get_scraped_and_aligned() -> list[dict]:
     if _scraped_cache is not None:
         return _scraped_cache
 
-    # 1. Try database
-    db_items = load_scraped_schemes()
-    if db_items:
-        _scraped_cache = db_items
-        return _scraped_cache
+    # 1. Try database (non-blocking thread check)
+    try:
+        db_items = await asyncio.to_thread(load_scraped_schemes)
+        if db_items:
+            _scraped_cache = db_items
+            return _scraped_cache
+    except Exception:
+        pass
 
     # 2. Try local file cache
     if os.path.exists(CACHE_FILE):
@@ -486,15 +493,16 @@ async def _get_scraped_and_aligned() -> list[dict]:
         except Exception:
             pass
 
-    # Quick fallback if cache is completely empty on first run
-    logger.info("[cache] Cache empty. Generating quick fallback alignment and starting background crawler...")
+    # Quick instant fallback if cache is currently warming or empty on first boot
+    logger.info("[cache] Cache warming. Returning instant offline fallback alignment and triggering background crawl...")
+    from scraper import FALLBACK_COLLEGES, FALLBACK_SCHOLARSHIPS, FALLBACK_GOVTSCHEMES
     raw_fallback = []
-    raw_fallback.extend(scrape_tndce_colleges())
-    raw_fallback.extend(scrape_tndce_scholarships())
-    raw_fallback.extend(scrape_govtschemes())
+    raw_fallback.extend(FALLBACK_COLLEGES)
+    raw_fallback.extend(FALLBACK_SCHOLARSHIPS)
+    raw_fallback.extend(FALLBACK_GOVTSCHEMES)
     _scraped_cache = generate_fallback_alignment(raw_fallback)
 
-    # Start proper AI scrapers in background
+    # Start proper AI scrapers in background if not already running
     asyncio.create_task(_perform_background_scrape_and_align())
     return _scraped_cache
 
