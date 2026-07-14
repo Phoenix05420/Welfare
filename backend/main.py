@@ -38,7 +38,7 @@ app.add_middleware(SessionMiddleware, secret_key="super-secret-key")
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins, change to frontend URL in production
+    allow_origin_regex="https://.*|http://localhost:.*",  # Dynamically allows all Vercel/Railway HTTPS origins and localhost
     allow_credentials=True,
     allow_methods=["*"],  # Allows all methods
     allow_headers=["*"],  # Allows all headers
