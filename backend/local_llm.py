@@ -120,8 +120,117 @@ async def chat_completion(
         try:
             import httpx
             async with httpx.AsyncClient(timeout=900.0) as client:
-                # 1. Single VLM model routing: If this request requires vision / document image analysis,
-                # send ONLY to LM Studio (port 1234) running Qwen 2.5 VL directly! Do NOT try text models or multi-server fallback.
+                # ----------------------------------------------------------------------
+                # PRIORITY 0: Cloud VLM / LLM API (Google Gemini API / Groq / OpenRouter)
+                # Perfect for FREE cloud deployments (Render backend, Vercel frontend)
+                # ----------------------------------------------------------------------
+                gemini_api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
+                if gemini_api_key:
+                    try:
+                        gemini_model = os.environ.get("GEMINI_MODEL", "gemini-2.0-flash")
+                        logger.info(f"[local_llm] Routing inference to Google Gemini API ({gemini_model})…")
+                        
+                        contents = []
+                        for m in messages:
+                            role = "model" if m.get("role") == "assistant" else "user"
+                            parts = []
+                            content_data = m.get("content", "")
+                            if isinstance(content_data, str):
+                                if content_data.strip():
+                                    parts.append({"text": content_data})
+                            elif isinstance(content_data, list):
+                                for item in content_data:
+                                    if item.get("type") == "text" and item.get("text", "").strip():
+                                        parts.append({"text": item.get("text")})
+                                    elif item.get("type") == "image_url":
+                                        url_str = item.get("image_url", {}).get("url", "")
+                                        if url_str.startswith("data:"):
+                                            header, b64_data = url_str.split(",", 1)
+                                            mime_type = "image/jpeg"
+                                            if ";" in header and ":" in header:
+                                                mime_type = header.split(":")[1].split(";")[0]
+                                            parts.append({
+                                                "inline_data": {
+                                                    "mime_type": mime_type,
+                                                    "data": b64_data
+                                                }
+                                            })
+                            if parts:
+                                contents.append({"role": role, "parts": parts})
+                        
+                        gemini_payload = {
+                            "contents": contents,
+                            "generationConfig": {
+                                "temperature": temperature,
+                                "maxOutputTokens": min(max_tokens, 2048),
+                                "topP": top_p,
+                            }
+                        }
+                        
+                        gemini_headers = {"x-goog-api-key": gemini_api_key}
+                        if not gemini_api_key.startswith("AIzaSy"):
+                            gemini_headers["Authorization"] = f"Bearer {gemini_api_key}"
+
+                        gemini_url = f"https://generativelanguage.googleapis.com/v1beta/models/{gemini_model}:generateContent?key={gemini_api_key}"
+                        resp = await client.post(gemini_url, headers=gemini_headers, json=gemini_payload, timeout=120.0)
+                        if resp.status_code == 200:
+                            candidates = resp.json().get("candidates", [])
+                            if candidates:
+                                text = candidates[0].get("content", {}).get("parts", [{}])[0].get("text", "")
+                                if text:
+                                    logger.info(f"[local_llm] Successfully completed inference via Google Gemini ({gemini_model})!")
+                                    return text, f"Google Gemini ({gemini_model})"
+                        elif resp.status_code == 404 and gemini_model != "gemini-1.5-flash":
+                            logger.warning(f"[local_llm] Gemini model {gemini_model} returned 404. Retrying with gemini-1.5-flash...")
+                            gemini_url_fb = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={gemini_api_key}"
+                            resp_fb = await client.post(gemini_url_fb, headers=gemini_headers, json=gemini_payload, timeout=120.0)
+                            if resp_fb.status_code == 200:
+                                candidates = resp_fb.json().get("candidates", [])
+                                if candidates:
+                                    text = candidates[0].get("content", {}).get("parts", [{}])[0].get("text", "")
+                                    if text:
+                                        logger.info("[local_llm] Successfully completed inference via Google Gemini (gemini-1.5-flash)!")
+                                        return text, "Google Gemini (gemini-1.5-flash)"
+                        
+                        logger.warning(f"[local_llm] Google Gemini API returned status {resp.status_code}: {resp.text[:300]}")
+                    except Exception as gem_err:
+                        logger.error(f"[local_llm] Error calling Google Gemini API: {gem_err}")
+
+                cloud_api_key = os.environ.get("VLM_API_KEY") or os.environ.get("GROQ_API_KEY") or os.environ.get("OPENROUTER_API_KEY")
+                cloud_api_base = os.environ.get("VLM_API_BASE_URL")
+                if not cloud_api_base and os.environ.get("GROQ_API_KEY"):
+                    cloud_api_base = "https://api.groq.com/openai/v1/chat/completions"
+                elif not cloud_api_base and os.environ.get("OPENROUTER_API_KEY"):
+                    cloud_api_base = "https://openrouter.ai/api/v1/chat/completions"
+                
+                if cloud_api_key and cloud_api_base:
+                    try:
+                        cloud_model = os.environ.get("VLM_MODEL") or ("llama-3.2-11b-vision-preview" if "groq" in cloud_api_base else "meta-llama/llama-3.2-11b-vision-instruct:free")
+                        logger.info(f"[local_llm] Routing inference to Cloud OpenAI-compatible VLM ({cloud_model}) at {cloud_api_base}…")
+                        payload = {
+                            "model": cloud_model,
+                            "messages": messages,
+                            "temperature": temperature,
+                            "max_tokens": min(max_tokens, 1024),
+                            "top_p": top_p,
+                            "stream": False,
+                        }
+                        resp = await client.post(
+                            cloud_api_base,
+                            headers={"Authorization": f"Bearer {cloud_api_key}", "Content-Type": "application/json"},
+                            json=payload,
+                            timeout=120.0
+                        )
+                        if resp.status_code == 200:
+                            text = resp.json().get("choices", [{}])[0].get("message", {}).get("content", "")
+                            if text:
+                                logger.info(f"[local_llm] Successfully completed inference via Cloud VLM ({cloud_model})!")
+                                return text, f"Cloud VLM ({cloud_model})"
+                        logger.warning(f"[local_llm] Cloud VLM endpoint returned status {resp.status_code}: {resp.text[:300]}")
+                    except Exception as cloud_err:
+                        logger.error(f"[local_llm] Error calling Cloud VLM endpoint: {cloud_err}")
+
+                # 1. Single VLM model routing (Local LM Studio fallback when running on local machine without API keys):
                 if is_vision:
                     try:
                         models_resp = await client.get("http://localhost:1234/v1/models", timeout=3.0)
@@ -167,8 +276,12 @@ async def chat_completion(
                     except (httpx.ConnectError, httpx.TimeoutException, Exception) as lms_err:
                         logger.error(f"[local_llm] Single VLM model error on port 1234: {lms_err}")
                         raise RuntimeError(
-                            f"Vision inference failed using single VLM model Qwen 2.5 VL (LM Studio): {lms_err}.\n"
-                            "Please ensure LM Studio is running on port 1234 with Qwen 2.5 VL loaded."
+                            f"Vision inference failed: No Cloud VLM API Key configured (GEMINI_API_KEY / GROQ_API_KEY) and LM Studio is not reachable at localhost:1234 ({lms_err}).\n\n"
+                            "[FREE CLOUD VLM DEPLOYMENT RECOMMENDATION]\n"
+                            "1. Get a 100% FREE Google Gemini API Key from Google AI Studio: https://aistudio.google.com/app/apikey\n"
+                            "2. In your Render Dashboard (or local .env), add the environment variable:\n"
+                            "   GEMINI_API_KEY=AIzaSy...\n"
+                            "3. Your WelfareIntel backend will automatically perform lightning-fast OCR & VLM document scanning for FREE!"
                         ) from lms_err
 
                 # 2. For pure text requests without images (e.g. general chat or schema post-processing), check Ollama on port 11434 first:

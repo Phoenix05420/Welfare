@@ -16,19 +16,57 @@
 
 ---
 
-## ⚡ One-Click Cloud Deployment (Instant Live URL!)
+## 🌟 Recommended Production Setup: Vercel (Frontend) + Render (Backend) + Free Cloud VLM
 
-Because WelfareIntel includes a pre-configured **Render Blueprint (`render.yaml`)**, you can launch the entire full-stack application onto the cloud with **a single click**:
+If you want to deploy the complete application for **FREE** with maximum performance and zero out-of-memory errors, follow this hybrid setup:
 
-1. Click the button above: **[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Phoenix05420/Welfare)**
-2. Log in with your GitHub account on Render.
-3. Render will automatically detect `render.yaml` and spin up both **`welfare-backend`** (`Dockerfile.backend`) and **`welfare-frontend`** (`Dockerfile.frontend`).
-4. Once deployed (~3 minutes), your app will be live at a public HTTPS domain like:
-   👉 **`https://welfare-frontend.onrender.com`**
+### 1️⃣ Frontend on Vercel (`100% Free & Fast CDN`)
+We have pre-configured `vercel.json` and dynamic `nitro` presets (`vite.config.ts`) specifically for Vercel:
+1. Go to [Vercel Dashboard](https://vercel.com/new) and import your GitHub repository (`Phoenix05420/Welfare`).
+2. **Framework Preset**: Vercel will automatically detect **Vite** (`vercel.json`).
+3. **Environment Variables**: Add one key under project settings:
+   * `VITE_API_BASE_URL` = `https://welfare-backend.onrender.com` (or your actual Render backend URL)
+4. Click **Deploy**! Your frontend will be live on a global CDN in ~60 seconds.
 
 ---
 
-## 🏛️ Deployment Architecture
+### 2️⃣ Backend on Render (`Free Docker Web Service`)
+We have optimized `Dockerfile.backend` and `render.yaml` for Render's container service:
+1. Go to [Render Dashboard](https://dashboard.render.com/) and click **New** ➡️ **Web Service** (or use the one-click `render.yaml` blueprint).
+2. Connect your GitHub repo (`Phoenix05420/Welfare`).
+3. Set **Runtime** to **Docker** and **Dockerfile Path** to `./Dockerfile.backend`.
+4. **Environment Variables**:
+   * `PORT` = `8000`
+   * `FRONTEND_URL` = `https://your-app.vercel.app` (your Vercel frontend domain)
+   * `GEMINI_API_KEY` = `AIzaSy...` (See step 3 below for getting your free VLM key!)
+
+---
+
+### 3️⃣ Vision-Language Model (VLM) Deployment (`100% Free & Trial Options`)
+Running large 3B–11B parameter vision models locally or inside small cloud containers (`512MB RAM`) causes out-of-memory crashes (`OOM`). Our backend (`backend/local_llm.py`) is engineered with **Priority 0 Cloud VLM routing** that connects to the world's best **Free Trial / Free Tier VLM APIs**:
+
+#### Option A: Google Gemini API (`⭐ RECOMMENDED - 100% Free Forever Tier`)
+* **Cost**: **Free** (`1,500 requests per day`, `15 requests per minute` at zero cost).
+* **Capabilities**: State-of-the-art vision and OCR accuracy on Indian ID cards (Aadhaar, PAN, Certificates, Marksheets).
+* **Setup in 30 Seconds**:
+  1. Go to [Google AI Studio API Key Page](https://aistudio.google.com/app/apikey).
+  2. Click **Create API Key** (no credit card required).
+  3. Copy your key and add it to your **Render Backend Environment Variables** as:
+     `GEMINI_API_KEY=AIzaSy...`
+  4. That's it! When documents are uploaded, your Render backend will instantly process them using `gemini-2.0-flash` for free!
+
+#### Option B: Groq Cloud (`Free Trial / Beta VLM`)
+* **Cost**: Free trial / beta tier (`console.groq.com`).
+* **Capabilities**: Blazing fast Llama 3.2 Vision 11B/90B (`< 1 second` inference).
+* **Setup**:
+  Add to Render Environment Variables:
+  * `GROQ_API_KEY` = `gsk_...`
+  * `VLM_MODEL` = `llama-3.2-11b-vision-preview`
+
+---
+
+## 🏛️ Deployment Architecture & Workflows
+
 
 WelfareIntel uses a **Container-First CI/CD Pipeline** powered by **GitHub Actions** (`.github/workflows/`). Every time you push to the `main` branch or create a release tag (`v1.0.0`), our workflows automatically:
 

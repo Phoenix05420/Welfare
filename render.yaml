@@ -20,6 +20,10 @@ services:
         sync: false
       - key: GOOGLE_REDIRECT_URI
         value: https://welfare-backend.onrender.com/auth/google/callback
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-2.0-flash
     healthCheckPath: /docs
 
   # ============================================================================
