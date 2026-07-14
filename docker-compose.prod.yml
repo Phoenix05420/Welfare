@@ -6,8 +6,8 @@ services:
   # ----------------------------------------------------------------------------
   backend:
     build:
-      context: .
-      dockerfile: Dockerfile.backend
+      context: ./backend
+      dockerfile: Dockerfile
     image: ghcr.io/${GITHUB_REPOSITORY:-phoenix05420/welfare}/backend:latest
     container_name: welfare-backend
     restart: always
@@ -19,6 +19,8 @@ services:
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
       - GOOGLE_REDIRECT_URI=${GOOGLE_REDIRECT_URI:-http://localhost:8000/auth/google/callback}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - GEMINI_MODEL=${GEMINI_MODEL:-gemini-2.0-flash}
       - GGUF_MODEL_PATH=${GGUF_MODEL_PATH}
       - N_GPU_LAYERS=${N_GPU_LAYERS:-0}
     volumes:
@@ -35,8 +37,8 @@ services:
   # ----------------------------------------------------------------------------
   frontend:
     build:
-      context: .
-      dockerfile: Dockerfile.frontend
+      context: ./frontend
+      dockerfile: Dockerfile
     image: ghcr.io/${GITHUB_REPOSITORY:-phoenix05420/welfare}/frontend:latest
     container_name: welfare-frontend
     restart: always

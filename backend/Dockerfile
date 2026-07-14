@@ -39,13 +39,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 
 # Copy requirement list and install dependencies
-COPY backend/requirements.txt ./requirements.txt
+COPY requirements.txt ./requirements.txt
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt && \
     playwright install --with-deps chromium
 
 # Copy application source code
-COPY backend/ ./
+COPY . ./
 
 # Expose API port
 EXPOSE 8000
