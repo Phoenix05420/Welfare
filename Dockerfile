@@ -1,5 +1,5 @@
 # ==============================================================================
-# WelfareIntel Backend Production Dockerfile (FastAPI + Playwright + OCR Engine)
+# WelfareIntel Root Production Dockerfile (For Hugging Face Spaces & Cloud SDK)
 # ==============================================================================
 
 FROM python:3.11-slim AS production
@@ -49,8 +49,8 @@ RUN cp requirements.txt /tmp/req.txt 2>/dev/null || true && \
 COPY . ./
 RUN if [ -d "/app/backend" ]; then cp -r /app/backend/* /app/ && rm -rf /app/backend /app/frontend; fi
 
-# Expose API port
+# Expose Hugging Face Space / API port
 EXPOSE 7860
 
-# Start Uvicorn server via python main.py where PORT environment variable is cleanly bound
+# Start Uvicorn server via python main.py where PORT (defaulting to 7860) environment variable is cleanly bound
 CMD ["python", "main.py"]
