@@ -215,15 +215,15 @@ async def get_type_analytics():
 # ---------------------------------------------------------------------------
 
 @app.get("/")
-def read_root():
+async def read_root():
     return {"message": "Welcome to WelfareIntel API"}
 
 @app.get("/api/categories")
-def get_categories():
+async def get_categories():
     return CATEGORIES
 
 @app.get("/api/schemes")
-def get_schemes(category: Optional[str] = None):
+async def get_schemes(category: Optional[str] = None):
     if category:
         filtered_schemes = [s for s in SCHEMES if category in s.get("categories", [])]
         return filtered_schemes
@@ -325,7 +325,7 @@ class ApplyRequest(BaseModel):
     scheme_id: str
 
 @app.post("/api/apply")
-def apply_scheme(request: ApplyRequest):
+async def apply_scheme(request: ApplyRequest):
     # This would normally save to a database
     return {"status": "success", "message": f"Successfully applied for scheme {request.scheme_id}"}
 
@@ -455,11 +455,11 @@ async def _initialize_cache_and_background_scrape():
             logger.info(f"[startup] Warm cache: Loaded {len(_scraped_cache)} items from fallback file {CACHE_FILE}")
         except Exception as e:
             logger.error(f"[startup] Failed to read fallback {CACHE_FILE}: {e}")
-            await asyncio.sleep(10)
+            await asyncio.sleep(30)
             await _perform_background_scrape_and_align()
     else:
-        # Trigger background task to populate cache after 10s delay
-        await asyncio.sleep(10)
+        # Trigger background task to populate cache after 30s delay
+        await asyncio.sleep(30)
         await _perform_background_scrape_and_align()
 
 
