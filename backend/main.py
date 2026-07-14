@@ -413,9 +413,9 @@ async def _perform_background_scrape_and_align():
         aligned = await align_with_ai(raw_items_with_details)
         _scraped_cache = aligned
 
-        # Save to Neon database
+        # Save to Neon database (in threadpool so Uvicorn event loop is never blocked)
         logger.info("[background-scrape] Saving aligned items to Neon database...")
-        db_saved = save_scraped_schemes(aligned)
+        db_saved = await asyncio.to_thread(save_scraped_schemes, aligned)
         
         # Save to persistent local cache file as fallback
         try:
@@ -574,3 +574,11 @@ async def clear_all_caches():
         "message": "All backend caches (scans, schemes, and files) have been cleared successfully.",
         "scans_cleared": scans_cleared
     }
+
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("PORT", 8000))
+    logger.info(f"Starting WelfareIntel server on 0.0.0.0:{port}...")
+    uvicorn.run("main:app", host="0.0.0.0", port=port, workers=1)
+

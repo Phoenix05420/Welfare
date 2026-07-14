@@ -52,9 +52,5 @@ RUN if [ -d "/app/backend" ]; then cp -r /app/backend/* /app/ && rm -rf /app/bac
 # Expose API port
 EXPOSE 8000
 
-# Health check to ensure Uvicorn server is responding on dynamic or default port
-HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
-    CMD sh -c 'curl -f http://127.0.0.1:${PORT:-8000}/docs || exit 1'
-
-# Start Uvicorn async server with single worker on dynamic Railway PORT or default 8000
-CMD ["sh", "-c", "exec python -m uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+# Start Uvicorn server via python main.py where PORT environment variable is cleanly bound
+CMD ["python", "main.py"]
