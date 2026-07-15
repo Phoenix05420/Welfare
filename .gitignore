@@ -43,5 +43,8 @@ __pycache__/
 *$py.class
 *.log
 backend_logs.txt
-conv_dump.txt
 dump_conv.py
+
+# Graphify output
+graphify-out/
+
