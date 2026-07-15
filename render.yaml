@@ -20,7 +20,7 @@ services:
       - key: GOOGLE_CLIENT_SECRET
         sync: false
       - key: GOOGLE_REDIRECT_URI
-        value: https://welfare-3zqi.onrender.com/auth/google/callback
+        value: https://welfare-cvv8.onrender.com/auth/google/callback
       - key: GEMINI_API_KEY
         sync: false
       - key: GEMINI_MODEL
@@ -42,4 +42,4 @@ services:
       - key: NODE_ENV
         value: production
       - key: VITE_API_BASE_URL
-        value: https://welfare-3zqi.onrender.com
+        value: https://welfare-cvv8.onrender.com
