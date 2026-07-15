@@ -14,7 +14,10 @@ import os
 import time
 import asyncio
 from typing import List, Dict, Any, Tuple, Optional
+from dotenv import load_dotenv
 from logger import logger
+
+load_dotenv()
 
 DEFAULT_MODEL_PATH = r"C:\Users\blue0\.lmstudio\models\lmstudio-community\Qwen2.5-VL-3B-Instruct-GGUF\Qwen2.5-VL-3B-Instruct-Q4_K_M.gguf"
 MODEL_PATH = os.environ.get("GGUF_MODEL_PATH", DEFAULT_MODEL_PATH)
@@ -226,6 +229,23 @@ async def chat_completion(
                             if text:
                                 logger.info(f"[local_llm] Successfully completed inference via Cloud VLM ({cloud_model})!")
                                 return text, f"Cloud VLM ({cloud_model})"
+                        
+                        if "groq" in cloud_api_base and resp.status_code in (404, 400, 429) and cloud_model == "llama-3.2-11b-vision-preview":
+                            fallback_cloud_model = "llama-3.2-90b-vision-preview"
+                            logger.warning(f"[local_llm] Groq {cloud_model} returned status {resp.status_code}. Retrying with {fallback_cloud_model}...")
+                            payload["model"] = fallback_cloud_model
+                            resp_fb = await client.post(
+                                cloud_api_base,
+                                headers={"Authorization": f"Bearer {cloud_api_key}", "Content-Type": "application/json"},
+                                json=payload,
+                                timeout=120.0
+                            )
+                            if resp_fb.status_code == 200:
+                                text = resp_fb.json().get("choices", [{}])[0].get("message", {}).get("content", "")
+                                if text:
+                                    logger.info(f"[local_llm] Successfully completed inference via Cloud VLM ({fallback_cloud_model})!")
+                                    return text, f"Cloud VLM ({fallback_cloud_model})"
+
                         logger.warning(f"[local_llm] Cloud VLM endpoint returned status {resp.status_code}: {resp.text[:300]}")
                     except Exception as cloud_err:
                         logger.error(f"[local_llm] Error calling Cloud VLM endpoint: {cloud_err}")
