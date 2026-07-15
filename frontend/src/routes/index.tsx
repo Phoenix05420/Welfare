@@ -151,12 +151,8 @@ function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.5, delay: i * 0.05 }}
-              whileHover={{ y: -6 }}
               className="glass shadow-card rounded-3xl p-6"
             >
-              <div className="mb-4 grid h-12 w-12 place-items-center rounded-2xl bg-primary-soft text-2xl">
-                {f.icon}
-              </div>
               <h3 className="font-display text-lg font-semibold">{f.title.en}</h3>
               <p className="mt-1 text-xs text-muted-foreground" lang="ta">
                 {f.title.ta}
@@ -222,12 +218,8 @@ function Home() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.06 }}
               className="glass shadow-card rounded-2xl p-5 text-center"
             >
-              <div className="mx-auto mb-3 grid h-12 w-12 place-items-center rounded-2xl bg-accent/40 text-2xl">
-                {b.icon}
-              </div>
               <div className="font-display text-sm font-semibold">{b.title.en}</div>
               <div className="mt-0.5 text-[11px] text-muted-foreground" lang="ta">
                 {b.title.ta}

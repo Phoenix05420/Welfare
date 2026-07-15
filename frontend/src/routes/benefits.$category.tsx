@@ -161,14 +161,12 @@ function CategoryPage() {
           {/* Stat pills */}
           <div className="flex flex-wrap gap-3">
             <StatPill
-              icon="🎓"
               count={scholarships.length}
               labelEn="Scholarships"
               labelTa="உதவித்தொகை"
               lang={lang}
             />
             <StatPill
-              icon="🏛️"
               count={schemes.length}
               labelEn="Schemes"
               labelTa="திட்டங்கள்"
@@ -334,10 +332,8 @@ function CategoryPage() {
             {/* Scholarships section */}
             {(type === "all" || type === "scholarship") && paginatedScholarships.length > 0 && (
               <SchemeSection
-                icon="🎓"
                 title={lang === "en" ? "Scholarships" : "உதவித்தொகைகள்"}
                 subtitle={lang === "en" ? `Showing scholarships on this page` : `உதவித்தொகை`}
-                accentClass="bg-accent/40 text-primary"
               >
                 {paginatedScholarships.map((s, i) => (
                   <SchemeCard key={s.id} scheme={s} index={i} />
@@ -348,10 +344,8 @@ function CategoryPage() {
             {/* Schemes section */}
             {(type === "all" || type === "scheme") && paginatedSchemes.length > 0 && (
               <SchemeSection
-                icon="🏛️"
                 title={lang === "en" ? "Government Schemes" : "அரசு திட்டங்கள்"}
                 subtitle={lang === "en" ? `Showing schemes on this page` : `திட்டங்கள்`}
-                accentClass="bg-primary-soft text-primary"
               >
                 {paginatedSchemes.map((s, i) => (
                   <SchemeCard key={s.id} scheme={s} index={i} />
@@ -406,7 +400,6 @@ function CategoryPage() {
               params={{ category: c.id }}
               className="glass shadow-card flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition hover:-translate-y-0.5 hover:text-primary"
             >
-              <span>{c.icon}</span>
               <span>{c.en}</span>
             </Link>
           ))}
@@ -419,16 +412,12 @@ function CategoryPage() {
 /* ─── Sub-components ─── */
 
 function SchemeSection({
-  icon,
   title,
   subtitle,
-  accentClass,
   children,
 }: {
-  icon: string;
   title: string;
   subtitle: string;
-  accentClass: string;
   children: React.ReactNode;
 }) {
   return (
@@ -439,9 +428,6 @@ function SchemeSection({
       className="mb-12"
     >
       <div className="mb-5 flex items-center gap-4">
-        <div className={`grid h-10 w-10 place-items-center rounded-xl text-xl ${accentClass}`}>
-          {icon}
-        </div>
         <div>
           <h2 className="font-display text-xl font-semibold">{title}</h2>
           <p className="text-xs text-muted-foreground">{subtitle}</p>
@@ -453,13 +439,11 @@ function SchemeSection({
 }
 
 function StatPill({
-  icon,
   count,
   labelEn,
   labelTa,
   lang,
 }: {
-  icon: string;
   count: number;
   labelEn: string;
   labelTa: string;
@@ -467,7 +451,6 @@ function StatPill({
 }) {
   return (
     <div className="flex items-center gap-2 rounded-2xl bg-surface-muted/80 px-4 py-2.5">
-      <span className="text-xl">{icon}</span>
       <div>
         <div className="font-display text-xl font-bold leading-none">{count}</div>
         <div className="text-[11px] text-muted-foreground">{lang === "en" ? labelEn : labelTa}</div>

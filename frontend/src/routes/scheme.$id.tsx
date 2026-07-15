@@ -466,12 +466,11 @@ function SchemePage() {
 
 function InfoCard({
   title,
-  icon,
   children,
   className = "",
 }: {
   title: string;
-  icon: string;
+  icon?: string;
   children: React.ReactNode;
   className?: string;
 }) {
@@ -484,9 +483,6 @@ function InfoCard({
       className={`glass shadow-card rounded-3xl p-6 ${className}`}
     >
       <div className="mb-4 flex items-center gap-3">
-        <div className="grid h-10 w-10 place-items-center rounded-xl bg-primary-soft text-xl">
-          {icon}
-        </div>
         <h2 className="font-display text-lg font-semibold">{title}</h2>
       </div>
       {children}
