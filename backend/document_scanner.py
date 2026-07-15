@@ -29,7 +29,7 @@ import json
 import os
 import re
 import time
-from typing import Any
+from typing import Any, Optional, Dict, List, Tuple, Union
 
 import cv2
 import httpx
