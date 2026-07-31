@@ -51,6 +51,11 @@ app.include_router(scanner_router)
 app.include_router(chat_router)
 app.include_router(auto_apply_router)
 
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
+
+
 # ---------------------------------------------------------------------------
 # OAuth — Google SSO
 # ---------------------------------------------------------------------------
