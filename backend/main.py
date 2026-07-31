@@ -51,9 +51,14 @@ app.include_router(scanner_router)
 app.include_router(chat_router)
 app.include_router(auto_apply_router)
 
+@app.get("/")
+def root():
+    return {"status": "ok", "message": "WelfareIntel API is running"}
+
 @app.get("/health")
 def health_check():
     return {"status": "ok"}
+
 
 
 # ---------------------------------------------------------------------------
